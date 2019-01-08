@@ -1,0 +1,44 @@
+title: About
+
+options:
+  status: false
+  url: false
+  delete: false
+  changeTemplate: false
+
+columns:
+  - width: 2/3
+    sections:
+      content:
+        type: fields
+        fields:
+          text:
+            label: Text
+            type: textarea
+            size: medium
+          newsletter:
+            label: Newsletter
+            type: text
+          palette:
+            label: Background Color
+            type: color-palette
+            default: '#00FF00'
+            options:
+              - '#135fdc'
+              - '#f6917e'
+            size: small
+            
+  - width: 1/3
+    sections:
+      info:
+        type: fields
+        fields:
+          address:
+            label: Address
+            type: textarea
+          director:
+            label: Director
+            type: textarea
+          producer:
+            label: Producer
+            type: textarea

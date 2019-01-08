@@ -1,6 +1,7 @@
 <template>
   <div class="about" v-if="about">
     {{ about.title }}
+    {{ about.content.intro }}
   </div>
 </template>
 

@@ -1,0 +1,9 @@
+title: Image
+
+accept:
+  mime: image/jpeg, image/png
+
+fields:
+  caption:
+    label: Caption
+    type: text

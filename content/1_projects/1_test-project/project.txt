@@ -1,0 +1,13 @@
+Title: Test Project
+
+----
+
+Year: 2019
+
+----
+
+Category: painting
+
+----
+
+Caption: *Title*, Year, Material, Format

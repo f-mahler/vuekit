@@ -1,0 +1,42 @@
+title: Project
+pages: false
+
+# tabs:
+#   gallery:
+columns:
+  - width: 2/3
+    sections:
+      gallery:
+        headline: Gallery
+        type: files
+        layout: cards
+        min: 1
+        template: image
+        size: tiny
+        image:
+          cover: true
+  - width: 1/3
+    sections:
+      info:
+        type: fields
+        fields:
+          year:
+            label: Year
+            type: number
+            placeholder: 2019
+          category:
+            label: Category
+            type: select
+            options:
+              painting: Painting
+              drawing: Drawing
+              curatorial: Curatorial
+              editorial: Editorial
+          caption:
+            label: Caption
+            type: markdown
+            font:
+              family: sans-serif
+              size: small
+            buttons:
+              - italic

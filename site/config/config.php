@@ -3,7 +3,8 @@
 use Kirby\Cms\Form;
 
 return [
-  'debug' => true,
+  'panel' => array('css' => '/site/assets/css/panel.css'),
+  'debug' => false,
   'api' => [
     'basicAuth' => true,
     'routes' => [

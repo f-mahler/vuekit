@@ -1,8 +1,12 @@
 title: Default Page
-preset: page
+
 fields:
   text:
     label: Text
-    type: textarea
-    size: large
-
+    type: markdown
+    font:
+      family: sans-serif
+      size: small
+    buttons:
+      - link
+      - email

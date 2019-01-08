@@ -1,0 +1,46 @@
+title: Projects
+
+options:
+  # status: false
+  url: false
+  delete: false
+  changeTemplate: false
+
+sections:
+  published:
+    headline: Published
+    type: pagetable
+    status: published
+    sortBy: year desc
+    columns:
+      title:
+        label: Title
+        text: '{{ page.title }}'
+        width: 2/3
+      category:
+        label: Category
+        text: '{{ page.category.toLabel }}'
+        width: 1/4
+      year:
+        label: Year
+        text: '{{ page.year }}'
+        width: 1/6
+  drafts:
+    headline: Drafts
+    type: pagetable
+    status: drafts
+    template: project
+    sortBy: year desc
+    columns:
+      title:
+        label: Title
+        text: '{{ page.title }}'
+        width: 2/3
+      category:
+        label: Category
+        text: '{{ page.category.toLabel }}'
+        width: 1/4
+      year:
+        label: Year
+        text: '{{ page.year }}'
+        width: 1/6
