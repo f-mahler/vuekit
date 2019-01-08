@@ -1,8 +1,8 @@
 <template>
-  <div class="about" v-if="about">
+  <main class="about" v-if="about">
     {{ about.title }}
     {{ about.content.intro }}
-  </div>
+  </main>
 </template>
 
 <script>

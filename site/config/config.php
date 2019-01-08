@@ -24,6 +24,8 @@ return [
             foreach ($page->files()->sortBy('sort', 'asc') as $file) {
               $filedata = array(
                 'url' => $file->url(),
+                'page' => $file->parent()->uid(),
+                'index' => $file->indexOf(),
                 'filename' => $file->name(),
                 'extension' => $file->extension(),
         				'size' => $file->size(),

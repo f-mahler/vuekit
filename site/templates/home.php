@@ -11,7 +11,7 @@
     <meta property="og:title" content="<?= $site->title()->html() ?>">
     <meta property="og:description" content="<?= $site->metaDescription()->html() ?>">
     <meta property="og:image" content="/dist/favicon.ico">
-  <link href="/dist/0.js" rel="prefetch"><link href="/dist/1.js" rel="prefetch"><link href="/dist/app.js" rel="preload" as="script"></head>
+  <link href="/dist/0.1b16d7092687971a3cec.hot-update.js" rel="prefetch"><link href="/dist/0.js" rel="prefetch"><link href="/dist/1.js" rel="prefetch"><link href="/dist/app.js" rel="preload" as="script"></head>
   <body>
     <noscript>
       <strong>We're sorry but this website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

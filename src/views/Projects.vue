@@ -1,10 +1,10 @@
 <template>
-  <div class="projects" v-if="projects">
+  <main class="projects" v-if="projects">
     <li v-for="project in projects.children" :key="project.uid">
-      {{ project.title }}
+      <h1>{{ project.title }}</h1>
       <img :src="project.files[0].url"/>
     </li>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -16,3 +16,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+</style>
