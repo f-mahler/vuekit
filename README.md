@@ -1,5 +1,6 @@
 # Vuekit
-Kirby and Vue together.
+[Kirby](https://getkirby.com) v3 and [Vue.js](https://vuejs.org/) together.
+Inspired by Morgan Brown's [kirby-vue-starter-simple](https://github.com/mhgbrown/kirby-vue-starter-simple)
 
 ### Requirement
 * A server with php & https (ex. Laravel Valet or MAMP)
