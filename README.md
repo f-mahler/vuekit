@@ -1,17 +1,23 @@
 # vuekit
-Kirby and Vue together
+Kirby and Vue together.
 
-## Project setup
-```
-npm install
-```
+### Requirement
+* A server with php, node, php (ex. Laravel Valet or MAMP)
 
-### Compiles for development
+### Project setup
+1. Clone or copy repo
+2. cd vuekit
+3. npm install
+4. Install kirby via /panel
+5. Add username / password to /src/auth.js
+6. npm run build
+
+### Development
 ```
 npm run dev
 ```
 
-### Compiles and minifies for production
+### Build for production
 ```
 npm run build
 ```
