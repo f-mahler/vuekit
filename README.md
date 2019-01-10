@@ -1,4 +1,4 @@
-# vuekit
+# Vuekit
 Kirby and Vue together.
 
 ### Requirement
@@ -8,8 +8,8 @@ Kirby and Vue together.
 1. Clone or copy repo
 2. cd vuekit
 3. npm install
-4. Install kirby via /panel
-5. Add username / password to /src/auth.js
+4. Install kirby via yoururl.com/panel
+5. Add your username & password to /src/auth.js
 6. npm run build
 
 ### Development
