@@ -2,7 +2,7 @@
 Kirby and Vue together.
 
 ### Requirement
-* A server with php, node, php (ex. Laravel Valet or MAMP)
+* A server with php & https (ex. Laravel Valet or MAMP)
 
 ### Project setup
 1. Clone or copy repo
