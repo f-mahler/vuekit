@@ -33,4 +33,4 @@ Icon
 /site/sessions/index.html
 
 # Custom Auth
-# /src/auth.js
+/src/auth.js
