@@ -1,5 +1,5 @@
 <template>
-  <main class="about" v-if="about">
+  <main class="about">
     {{ about.title }}
     {{ about.content.intro }}
   </main>

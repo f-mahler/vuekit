@@ -14,4 +14,4 @@ Instagram:
 
 ----
 
-Metadescription: Test it out here
+Metadescription: Vuekit is starter kit for utilising Kirby v3 and Vue.js

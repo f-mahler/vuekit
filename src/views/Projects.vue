@@ -1,6 +1,6 @@
 <template>
-  <main class="projects" v-if="projects">
-    <li v-for="project in projects.children" :key="project.uid">
+  <main class="projects">
+    <li ref="project" v-for="project in projects.children" :key="project.uid">
       <h1>{{ project.title }}</h1>
       <img :src="project.files[0].url"/>
     </li>
@@ -18,5 +18,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

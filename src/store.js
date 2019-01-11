@@ -15,20 +15,16 @@ export default new Vuex.Store({
   getters: {
     getPagesByType: (state, getters) => (type, collection = state.pages) => {
       let results = []
-
       if (!collection || !collection.length) {
         return results
       }
-
       for (let i = 0; i < collection.length; i++) {
         if (collection[i].type === type) {
           results.push(collection[i])
         }
-
         let targetPages = getters.getPagesByType(type, collection[i].children)
         results = results.concat(targetPages)
       }
-
       return results
     },
     getPageByUID: (state, getters) => (uid, collection = state.pages) => {
@@ -37,7 +33,6 @@ export default new Vuex.Store({
         if (collection[i].uid === uid) {
           return collection[i]
         }
-
         let targetPage = getters.getPageByUID(uid, collection[i].children)
         if (targetPage) {
           return targetPage
@@ -47,7 +42,7 @@ export default new Vuex.Store({
   },
   actions: {
     async loadContent ({ commit }) {
-      axios.get('/api/data', {
+      await axios.get('/api/data', {
         withCredentials: true,
         auth: {
           username: auth.username,

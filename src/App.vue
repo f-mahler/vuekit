@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="site">
+  <div id="app" v-if="isLoaded">
     <header>
       <h1>{{ site.title }}</h1>
       <navigation></navigation>
@@ -10,12 +10,20 @@
 
 <script>
   import Navigation from './components/Navigation.vue'
+
   export default {
     components: {
       Navigation
     },
+    data() {
+      return {
+        isLoaded:false
+      }
+    },
     beforeCreate () {
-      this.$store.dispatch('loadContent', { self: this })
+      this.$store.dispatch('loadContent').then(() => {
+        this.isLoaded = true
+      })
     },
     computed: {
       site() {

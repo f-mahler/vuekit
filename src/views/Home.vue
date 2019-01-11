@@ -1,5 +1,5 @@
 <template>
-  <main class="home" v-if="home">
+  <main class="home">
     {{ home.title }}
   </main>
 </template>
