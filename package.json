@@ -1,9 +1,9 @@
 {
   "name": "vuekit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "vue-cli-service build --watch",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

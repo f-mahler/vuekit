@@ -6,12 +6,13 @@ Inspired by Morgan Brown's [kirby-vue-starter-simple](https://github.com/mhgbrow
 * A server with php & https (ex. Laravel Valet or MAMP)
 
 ### Project setup
-1. Clone or copy repo
-2. cd vuekit
-3. npm install
-4. Install kirby via yoururl.com/panel
-5. Add your username & password to /src/auth.js
-6. npm run build
+```
+1. npm install
+2. valet secure
+3. Install kirby via <url>.com/panel
+4. Add your username & password to /src/auth.js
+5. npm run build/dev
+```
 
 ### Development
 ```
