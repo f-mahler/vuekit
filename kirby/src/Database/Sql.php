@@ -23,14 +23,14 @@ class Sql
     /**
      * The parent database connection
      *
-     * @var Kirby\Database\Database
+     * @var Database
      */
     public $database;
 
     /**
      * Constructor
      *
-     * @param Kirby\Database\Database $database
+     * @param Database $database
      */
     public function __construct($database)
     {
@@ -72,7 +72,7 @@ class Sql
         return [
             'query'    => $query,
             'bindings' => [
-                $databaseBinding => $this->database->database,
+                $databaseBinding => $this->database->name(),
                 $tableBinding    => $table,
             ]
         ];
@@ -179,7 +179,7 @@ class Sql
     {
         // column type
         if (isset($column['type']) === false) {
-            throw new InvalidArgumentException('No column type given for column ' . $name);
+            throw new InvalidArgumentException('No column type given for column ' . $column);
         }
 
         // column name
@@ -696,7 +696,7 @@ class Sql
         return [
             'query'    => 'SELECT TABLE_NAME AS name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ' . $binding,
             'bindings' => [
-                $binding => $this->database->database
+                $binding => $this->database->name()
             ]
         ];
     }

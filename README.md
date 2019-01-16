@@ -22,3 +22,8 @@ npm run dev
 ```
 npm run build
 ```
+
+### Update Kirby
+```
+composer update
+```

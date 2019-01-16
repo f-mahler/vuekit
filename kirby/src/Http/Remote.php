@@ -51,6 +51,16 @@ class Remote
     public $curlopt = [];
 
     /**
+     * @var int
+     */
+    public $errorCode;
+
+    /**
+     * @var string
+     */
+    public $errorMessage;
+
+    /**
      * @var array
      */
     public $headers = [];
@@ -269,6 +279,17 @@ class Remote
     public function info(): array
     {
         return $this->info;
+    }
+
+    /**
+     * Decode the response content
+     *
+     * @param bool $array decode as array or object
+     * @return array|stdClass
+     */
+    public function json(bool $array = true)
+    {
+        return json_decode($this->content(), $array);
     }
 
     /**

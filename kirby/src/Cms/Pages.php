@@ -199,6 +199,7 @@ class Pages extends Collection
      */
     public function findById($id)
     {
+        $id        = trim($id, '/');
         $page      = $this->get($id);
         $multiLang = App::instance()->multilang();
 
@@ -266,6 +267,16 @@ class Pages extends Collection
     public function findByUri(string $id)
     {
         return $this->findById($id);
+    }
+
+    /**
+     * Finds the currently open page
+     *
+     * @return Page|null
+     */
+    public function findOpen()
+    {
+        return $this->findBy('isOpen', true);
     }
 
     /**

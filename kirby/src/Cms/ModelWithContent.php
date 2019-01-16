@@ -28,6 +28,23 @@ abstract class ModelWithContent extends Model
     public $translations;
 
     /**
+     * Returns the blueprint of the model
+     *
+     * @return Blueprint
+     */
+    abstract public function blueprint();
+
+    /**
+     * Executes any given model action
+     *
+     * @param string $action
+     * @param array $arguments
+     * @param Closure $callback
+     * @return mixed
+     */
+    abstract protected function commit(string $action, array $arguments, Closure $callback);
+
+    /**
      * Returns the content
      *
      * @param string $languageCode
@@ -120,9 +137,9 @@ abstract class ModelWithContent extends Model
      * folder in which the content file is
      * located
      *
-     * @return string
+     * @return string|null
      */
-    public function contentFileDirectory(): string
+    public function contentFileDirectory(): ?string
     {
         return $this->root();
     }
@@ -145,6 +162,25 @@ abstract class ModelWithContent extends Model
     abstract public function contentFileName(): string;
 
     /**
+     * Decrement a given field value
+     *
+     * @param string $field
+     * @param integer $by
+     * @param integer $min
+     * @return self
+     */
+    public function decrement(string $field, int $by = 1, int $min = 0)
+    {
+        $value = (int)$this->content()->get($field)->value() - $by;
+
+        if ($value < $min) {
+            $value = $min;
+        }
+
+        return $this->update([$field => $value]);
+    }
+
+    /**
      * Returns all content validation errors
      *
      * @return array
@@ -160,6 +196,25 @@ abstract class ModelWithContent extends Model
         }
 
         return $errors;
+    }
+
+    /**
+     * Increment a given field value
+     *
+     * @param string $field
+     * @param integer $by
+     * @param integer $max
+     * @return self
+     */
+    public function increment(string $field, int $by = 1, int $max = null)
+    {
+        $value = (int)$this->content()->get($field)->value() + $by;
+
+        if ($max && $value > $max) {
+            $value = $max;
+        }
+
+        return $this->update([$field => $value]);
     }
 
     /**
@@ -186,6 +241,13 @@ abstract class ModelWithContent extends Model
             return [];
         }
     }
+
+    /**
+     * Returns the absolute path to the model
+     *
+     * @return string
+     */
+    abstract public function root(): ?string;
 
     /**
      * Stores the content on disk
@@ -242,7 +304,7 @@ abstract class ModelWithContent extends Model
         $translation = $clone->translation($languageCode);
 
         if ($translation === null) {
-            throw new InvalidArgument('Invalid language: ' . $languageCode);
+            throw new InvalidArgumentException('Invalid language: ' . $languageCode);
         }
 
         // merge the translation with the new data

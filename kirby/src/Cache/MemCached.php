@@ -34,7 +34,8 @@ class MemCached extends Cache
             'prefix'  => null,
         ];
 
-        $this->options    = array_merge($defaults, $params);
+        parent::__construct(array_merge($defaults, $params));
+
         $this->connection = new \Memcached();
         $this->connection->addServer($this->options['host'], $this->options['port']);
     }
@@ -54,7 +55,7 @@ class MemCached extends Cache
      */
     public function set(string $key, $value, int $minutes = 0)
     {
-        return $this->connection->set($this->key($key), $this->value($value, $minutes), $this->expiration($minutes));
+        return $this->connection->set($this->key($key), $this->value($value, $minutes)->toJson(), $this->expiration($minutes));
     }
 
     /**
@@ -77,7 +78,7 @@ class MemCached extends Cache
      */
     public function retrieve(string $key)
     {
-        return $this->connection->get($this->key($key));
+        return Value::fromJson($this->connection->get($this->key($key)));
     }
 
     /**

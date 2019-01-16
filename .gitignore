@@ -34,3 +34,7 @@ Icon
 
 # Custom Auth
 /src/auth.js
+
+/vendor/*/
+/composer.lock
+/vendor/*.php

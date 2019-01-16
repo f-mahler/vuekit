@@ -7,6 +7,7 @@ use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Data\Data;
 use Kirby\Form\Field;
+use Kirby\Toolkit\A;
 use Kirby\Toolkit\F;
 use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\Obj;
@@ -197,10 +198,10 @@ class Blueprint
         if ($mixin === null) {
             $props = $props;
         } elseif (is_array($mixin) === true) {
-            $props = array_replace_recursive($mixin, $props);
+            $props = A::merge($mixin, $props, A::MERGE_REPLACE);
         } else {
             try {
-                $props = array_replace_recursive(Data::read($mixin), $props);
+                $props = A::merge(Data::read($mixin), $props, A::MERGE_REPLACE);
             } catch (Exception $e) {
                 $props = $props;
             }
@@ -208,7 +209,6 @@ class Blueprint
 
         // remove the extends flag
         unset($props['extends']);
-
         return $props;
     }
 
@@ -606,7 +606,18 @@ class Blueprint
                         ]
                     ];
                 } else {
-                    $this->fields = array_merge($this->fields, $fields);
+                    foreach ($fields as $fieldName => $fieldProps) {
+                        if (isset($this->fields[$fieldName]) === true) {
+                            $this->fields[$fieldName] = $fields[$fieldName] = [
+                                'type'  => 'info',
+                                'label' => $fieldProps['label'] ?? 'Error',
+                                'text'  => 'The field name <strong>"' . $fieldName . '"</strong> already exists in your blueprint.',
+                                'theme' => 'negative'
+                            ];
+                        } else {
+                            $this->fields[$fieldName] = $fieldProps;
+                        }
+                    }
                 }
 
                 $sections[$sectionName]['fields'] = $fields;

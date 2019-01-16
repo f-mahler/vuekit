@@ -302,7 +302,7 @@ trait PageActions
         // clean up the slug
         $props['slug']     = Str::slug($props['slug'] ?? $props['content']['title'] ?? null);
         $props['template'] = $props['model'] = strtolower($props['template'] ?? 'default');
-        $props['isDraft']  = true;
+        $props['isDraft']  = ($props['draft'] ?? true);
 
         // create a temporary page object
         $page = Page::factory($props);
@@ -329,7 +329,11 @@ trait PageActions
             $page = $page->save($page->content()->toArray(), $languageCode);
 
             // flush the parent cache to get children and drafts right
-            $page->parentModel()->drafts()->append($page->id(), $page);
+            if ($page->isDraft() === true) {
+                $page->parentModel()->drafts()->append($page->id(), $page);
+            } else {
+                $page->parentModel()->children()->append($page->id(), $page);
+            }
 
             return $page;
         });

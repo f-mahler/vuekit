@@ -31,7 +31,7 @@ class FileCache extends Cache
             'extension' => null
         ];
 
-        $this->options = array_merge($defaults, $params);
+        parent::__construct(array_merge($defaults, $params));
 
         // try to create the directory
         Dir::make($this->options['root'], true);
@@ -68,8 +68,7 @@ class FileCache extends Cache
      */
     public function set(string $key, $value, int $minutes = 0)
     {
-        $data = serialize($this->value($value, $minutes));
-        return F::write($this->file($key), $data);
+        return F::write($this->file($key), $this->value($value, $minutes)->toJson());
     }
 
     /**
@@ -80,7 +79,7 @@ class FileCache extends Cache
      */
     public function retrieve(string $key)
     {
-        return unserialize(F::read($this->file($key)));
+        return Value::fromJson(F::read($this->file($key)));
     }
 
     /**

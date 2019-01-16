@@ -11,6 +11,7 @@ use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Form\Field;
+use Kirby\Http\Route;
 use Kirby\Http\Router;
 use Kirby\Http\Request;
 use Kirby\Http\Server;
@@ -47,6 +48,7 @@ class App
 
     public $data = [];
 
+    protected $api;
     protected $collections;
     protected $defaultLanguage;
     protected $language;
@@ -54,6 +56,8 @@ class App
     protected $multilang;
     protected $options;
     protected $path;
+    protected $request;
+    protected $response;
     protected $roles;
     protected $roots;
     protected $routes;
@@ -84,6 +88,9 @@ class App
         $this->optionsFromConfig();
         $this->optionsFromProps($props['options'] ?? []);
 
+        // set the path to make it available for the url bakery
+        $this->setPath($props['path'] ?? null);
+
         // create all urls after the config, so possible
         // options can be taken into account
         $this->bakeUrls($props['urls'] ?? []);
@@ -91,7 +98,6 @@ class App
         // configurable properties
         $this->setOptionalProperties($props, [
             'languages',
-            'path',
             'request',
             'roles',
             'site',
@@ -159,6 +165,25 @@ class App
         ];
 
         return $this->api = $this->api ?? new Api($api);
+    }
+
+    /**
+     *  Apply a hook to the given value
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    public function apply(string $name, $value)
+    {
+        if ($functions = $this->extension('hooks', $name)) {
+            foreach ($functions as $function) {
+                // bind the App object to the hook
+                $value = $function->call($this, $value);
+            }
+        }
+
+        return $value;
     }
 
     /**
@@ -445,8 +470,13 @@ class App
 
         // any direct exception will be turned into an error page
         if (is_a($input, 'Throwable') === true) {
-            $code    = $input->getCode();
-            $message = $input->getMessage();
+            if (is_a($input, 'Kirby\Exception\Exception') === true) {
+                $code    = $input->getHttpCode();
+                $message = $input->getMessage();
+            } else {
+                $code    = $input->getCode();
+                $message = $input->getMessage();
+            }
 
             if ($code < 400 || $code > 599) {
                 $code = 500;
@@ -555,8 +585,10 @@ class App
      */
     public function kirbytext(string $text = null, array $data = []): string
     {
+        $text = $this->apply('kirbytext:before', $text);
         $text = $this->kirbytags($text, $data);
         $text = $this->markdown($text);
+        $text = $this->apply('kirbytext:after', $text);
 
         return $text;
     }
@@ -712,7 +744,7 @@ class App
     /**
      * Returns the request path
      *
-     * @return void
+     * @return string
      */
     public function path()
     {
@@ -899,8 +931,8 @@ class App
     /**
      * Returns the current session object
      *
-     * @param  array   $options Additional options, see the session component
-     * @return Session|AutoSession
+     * @param array $options Additional options, see the session component
+     * @return Session
      */
     public function session(array $options = [])
     {
