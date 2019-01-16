@@ -3,7 +3,7 @@
 Inspired by Morgan Brown's [kirby-vue-starter-simple](https://github.com/mhgbrown/kirby-vue-starter-simple)
 
 ### Requirement
-* A server with php & https (ex. Laravel Valet or MAMP)
+* A server with php & https (ex. Laravel Valet)
 
 ### Project setup
 ```
