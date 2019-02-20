@@ -45,8 +45,8 @@ export default new Vuex.Store({
       await axios.get('/api/data', {
         withCredentials: true,
         auth: {
-          username: auth.username,
-          password: auth.password
+          username: auth.u,
+          password: auth.p
         }
       })
       .then(function (response) {

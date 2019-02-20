@@ -35,6 +35,8 @@ use Kirby\Toolkit\Url;
  */
 class App
 {
+    const CLASS_ALIAS = 'kirby';
+
     use AppCaches;
     use AppErrors;
     use AppPlugins;
@@ -419,6 +421,10 @@ class App
         $parent   = $parent ?? $this->site();
         $id       = dirname($path);
         $filename = basename($path);
+
+        if (is_a($parent, File::class) === true) {
+            $parent = $parent->parent();
+        }
 
         if ($id === '.') {
             if ($file = $parent->file($filename)) {

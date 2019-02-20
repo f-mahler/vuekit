@@ -1,0 +1,8 @@
+title: User
+
+fields:
+  info:
+    label: Info
+    type: info
+    text: |
+      Use the settings to modify name, email or password.

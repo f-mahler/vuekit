@@ -3,10 +3,4 @@ title: Default Page
 fields:
   text:
     label: Text
-    type: markdown
-    font:
-      family: sans-serif
-      size: small
-    buttons:
-      - link
-      - email
+    type: textarea

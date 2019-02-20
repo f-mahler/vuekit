@@ -14,16 +14,23 @@ return [
 
           $site = $this->site();
 
-          $sitedata = array(
-            'title' => $site->title()->value(),
-            'url' => $site->url()
-          );
+          function content($pageId) {
+            $collection = [];
+            $content = $pageId->content();
+            foreach($content->fields() as $field) {
+              if(strpos($field->key(), '_md') !== false) {
+                $collection[$field->key()] = $field->kirbytext()->value();
+              }
+            }
+            return $collection;
+          }
 
           function files($page) {
             $files = [];
             foreach ($page->files()->sortBy('sort', 'asc') as $file) {
               $filedata = array(
                 'url' => $file->url(),
+                'thumb' => $file->thumb(['width' => 10, 'quality' => 80, 'blur' => 5])->url(),
                 'page' => $file->parent()->uid(),
                 'index' => $file->indexOf(),
                 'filename' => $file->name(),
@@ -48,6 +55,7 @@ return [
                 'status' => $child->status(),
                 'template' => $child->intendedTemplate()->name(),
                 'content' => Form::for($child)->values(),
+                'markdown' => content($child),
                 'files' => files($child),
                 'children' => children($child)
               );
@@ -55,6 +63,13 @@ return [
             }
             return $children;
           }
+
+          $sitedata = array(
+            'title' => $site->title()->value(),
+            'url' => $site->url(),
+            'content' => Form::for($site)->values(),
+            'markdown' => content($site),
+          );
 
           $pages = [];
           foreach ($site->children() as $id) {
@@ -65,6 +80,8 @@ return [
               'status' => $page->status(),
               'template' => $page->intendedTemplate()->name(),
               'content' => Form::for($page)->values(),
+              // 'markdown' => content($page),
+              'markdown' => content($page),
               'files' => files($page),
               'children' => children($page)
             );

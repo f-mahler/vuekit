@@ -24,6 +24,8 @@ use Throwable;
  */
 class Page extends ModelWithContent
 {
+    const CLASS_ALIAS = 'page';
+
     use PageActions;
     use PageSiblings;
     use HasChildren;
@@ -179,6 +181,10 @@ class Page extends ModelWithContent
      */
     public function __construct(array $props)
     {
+        // set the slug as the first property
+        $this->slug = $props['slug'] ?? null;
+
+        // add all other properties
         $this->setProperties($props);
     }
 
@@ -592,16 +598,29 @@ class Page extends ModelWithContent
      */
     public function isChildOf($parent): bool
     {
-        return $this->parent()->is($parent);
+        if ($parent = $this->parent()) {
+            return $parent->is($parent);
+        }
+
+        return false;
     }
 
     /**
      * Checks if the page is a descendant of the given page
      *
+     * @param string|Page $parent
      * @return boolean
      */
-    public function isDescendantOf(Page $parent): bool
+    public function isDescendantOf($parent): bool
     {
+        if (is_string($parent) === true) {
+            $parent = $this->site()->find($parent);
+        }
+
+        if (!$parent) {
+            return false;
+        }
+
         return $this->parents()->has($parent->id()) === true;
     }
 
@@ -818,7 +837,7 @@ class Page extends ModelWithContent
      * @param string|null $handler
      * @return int|string
      */
-    public function modified(string $format = 'U', string $handler = null)
+    public function modified(string $format = null, string $handler = null)
     {
         return F::modified($this->contentFile(), $format, $handler ?? $this->kirby()->option('date.handler', 'date'));
     }
@@ -1478,7 +1497,11 @@ class Page extends ModelWithContent
         }
 
         if ($parent = $this->parent()) {
-            return $this->url = $this->parent()->url() . '/' . $this->uid();
+            if ($parent->isHomePage() === true) {
+                return $this->url = $this->kirby()->url('base') . '/' . $parent->uid() . '/' . $this->uid();
+            } else {
+                return $this->url = $this->parent()->url() . '/' . $this->uid();
+            }
         }
 
         return $this->url = $this->kirby()->url('base') . '/' . $this->uid();
@@ -1502,7 +1525,11 @@ class Page extends ModelWithContent
         }
 
         if ($parent = $this->parent()) {
-            return $this->url = $this->parent()->urlForLanguage($language) . '/' . $this->slug($language);
+            if ($parent->isHomePage() === true) {
+                return $this->url = $this->site()->urlForLanguage($language) . '/' . $parent->slug($language) . '/' . $this->slug($language);
+            } else {
+                return $this->url = $this->parent()->urlForLanguage($language) . '/' . $this->slug($language);
+            }
         }
 
         return $this->url = $this->site()->urlForLanguage($language) . '/' . $this->slug($language);

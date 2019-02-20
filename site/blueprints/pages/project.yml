@@ -34,9 +34,4 @@ columns:
               editorial: Editorial
           caption:
             label: Caption
-            type: markdown
-            font:
-              family: sans-serif
-              size: small
-            buttons:
-              - italic
+            type: textarea

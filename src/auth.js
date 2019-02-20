@@ -1,6 +1,6 @@
 const auth = {
-  username: '<username>',
-  password: '<password>'
+  u: 'api@vuekit.com',
+  p: 'loadContent'
 }
 
 export default auth

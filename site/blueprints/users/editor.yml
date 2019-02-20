@@ -1,7 +1,13 @@
 title: Editor
+extends: users/default
+
 permissions:
-  site:
-    update: false
-  pages:
+  access:
+    panel: true
+    users: false
+    site: true
+    settings: false
+  user:
     delete: false
-  users: false
+    create: false
+    changeRole: false

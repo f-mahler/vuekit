@@ -6,6 +6,9 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes: [
     {
       path: '/',
@@ -21,6 +24,10 @@ export default new Router({
       path: '/projects',
       name: 'projects',
       component: () => import('./views/Projects.vue')
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
