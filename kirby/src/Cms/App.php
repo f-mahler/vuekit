@@ -29,9 +29,16 @@ use Kirby\Toolkit\Str;
 use Kirby\Toolkit\Url;
 
 /**
- * The App object is a big-ass monolith that's
- * in the center between all the other CMS classes.
- * It's the $kirby object in templates and handles
+ * The `$kirby` object is the app instance of
+ * your Kirby installation. It's the central
+ * starting point to get all the different
+ * aspects of your site, like the options, urls,
+ * roots, languages, roles, etc.
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      http://getkirby.com
+ * @copyright Bastian Allgeier
  */
 class App
 {
@@ -107,6 +114,9 @@ class App
             'users'
         ]);
 
+        // set the singleton
+        Model::$kirby = static::$instance = $this;
+
         // setup the I18n class with the translation loader
         $this->i18n();
 
@@ -119,9 +129,6 @@ class App
 
         // handle those damn errors
         $this->handleErrors();
-
-        // set the singleton
-        Model::$kirby = static::$instance = $this;
 
         // bake config
         Config::$data = $this->options;
@@ -148,10 +155,15 @@ class App
     /**
      * Returns the Api instance
      *
+     * @internal
      * @return Api
      */
     public function api(): Api
     {
+        if ($this->api !== null) {
+            return $this->api;
+        }
+
         $root       = static::$root . '/config/api';
         $extensions = $this->extensions['api'] ?? [];
         $routes     = (include $root . '/routes.php')($this);
@@ -166,12 +178,13 @@ class App
             'kirby'          => $this,
         ];
 
-        return $this->api = $this->api ?? new Api($api);
+        return $this->api = new Api($api);
     }
 
     /**
-     *  Apply a hook to the given value
+     * Apply a hook to the given value
      *
+     * @internal
      * @param string $name
      * @param mixed $value
      * @return mixed
@@ -220,21 +233,50 @@ class App
     }
 
     /**
+     * Returns all available blueprints for this installation
+     *
+     * @param string $type
+     * @return array
+     */
+    public function blueprints(string $type = 'pages')
+    {
+        $blueprints = [];
+
+        foreach ($this->extensions('blueprints') as $name => $blueprint) {
+            if (dirname($name) === $type) {
+                $name = basename($name);
+                $blueprints[$name] = $name;
+            }
+        }
+
+        foreach (glob($this->root('blueprints') . '/' . $type . '/*.yml') as $blueprint) {
+            $name = F::name($blueprint);
+            $blueprints[$name] = $name;
+        }
+
+        ksort($blueprints);
+
+        return array_values($blueprints);
+    }
+
+    /**
      * Calls any Kirby route
      *
      * @return mixed
      */
     public function call(string $path = null, string $method = null)
     {
-        $path   = $path   ?? $this->path();
-        $method = $method ?? $this->request()->method();
-        $route  = $this->router()->find($path, $method);
+        $router = $this->router();
 
-        $this->trigger('route:before', $route, $path, $method);
-        $result = $route->action()->call($route, ...$route->arguments());
-        $this->trigger('route:after', $route, $path, $method, $result);
+        $router::$beforeEach = function ($route, $path, $method) {
+            $this->trigger('route:before', $route, $path, $method);
+        };
 
-        return $result;
+        $router::$afterEach = function ($route, $path, $method, $result) {
+            $this->trigger('route:after', $route, $path, $method, $result);
+        };
+
+        return $router->call($path ?? $this->path(), $method ?? $this->request()->method());
     }
 
     /**
@@ -243,7 +285,7 @@ class App
      * automatically injected
      *
      * @param string $name
-     * @return void
+     * @return Kirby\Cms\Collection|null
      */
     public function collection(string $name)
     {
@@ -262,12 +304,13 @@ class App
      */
     public function collections(): Collections
     {
-        return $this->collections = $this->collections ?? Collections::load($this);
+        return $this->collections = $this->collections ?? new Collections;
     }
 
     /**
      * Returns a core component
      *
+     * @internal
      * @param string $name
      * @return mixed
      */
@@ -279,6 +322,7 @@ class App
     /**
      * Returns the content extension
      *
+     * @internal
      * @return string
      */
     public function contentExtension(): string
@@ -289,6 +333,7 @@ class App
     /**
      * Returns files that should be ignored when scanning folders
      *
+     * @internal
      * @return array
      */
     public function contentIgnore(): array
@@ -300,6 +345,7 @@ class App
      * Calls a page controller by name
      * and with the given arguments
      *
+     * @internal
      * @param string $name
      * @param array $arguments
      * @return array
@@ -367,6 +413,8 @@ class App
     /**
      * Destroy the instance singleton and
      * purge other static props
+     *
+     * @internal
      */
     public static function destroy()
     {
@@ -385,7 +433,7 @@ class App
         $visitor   = $this->visitor();
 
         foreach ($visitor->acceptedLanguages() as $lang) {
-            if ($language = $languages->findBy('locale', $lang->locale())) {
+            if ($language = $languages->findBy('locale', $lang->locale(LC_ALL))) {
                 return $language;
             }
         }
@@ -421,6 +469,10 @@ class App
         $parent   = $parent ?? $this->site();
         $id       = dirname($path);
         $filename = basename($path);
+
+        if (is_a($parent, User::class) === true) {
+            return $parent->file($filename);
+        }
 
         if (is_a($parent, File::class) === true) {
             $parent = $parent->parent();
@@ -466,6 +518,7 @@ class App
      * Takes almost any kind of input and
      * tries to convert it into a valid response
      *
+     * @internal
      * @param mixed $input
      * @return Response
      */
@@ -551,6 +604,7 @@ class App
     /**
      * Renders a single KirbyTag with the given attributes
      *
+     * @internal
      * @param string $type
      * @param string $value
      * @param array $attr
@@ -569,6 +623,7 @@ class App
     /**
      * KirbyTags Parser
      *
+     * @internal
      * @param string $text
      * @param array $data
      * @return string
@@ -585,15 +640,16 @@ class App
     /**
      * Parses KirbyTags first and Markdown afterwards
      *
+     * @internal
      * @param string $text
      * @param array $data
      * @return string
      */
-    public function kirbytext(string $text = null, array $data = []): string
+    public function kirbytext(string $text = null, array $data = [], bool $inline = false): string
     {
         $text = $this->apply('kirbytext:before', $text);
         $text = $this->kirbytags($text, $data);
-        $text = $this->markdown($text);
+        $text = $this->markdown($text, $inline);
         $text = $this->apply('kirbytext:after', $text);
 
         return $text;
@@ -625,6 +681,7 @@ class App
     /**
      * Returns the current language code
      *
+     * @internal
      * @return string|null
      */
     public function languageCode(string $languageCode = null): ?string
@@ -649,12 +706,14 @@ class App
     /**
      * Parses Markdown
      *
+     * @internal
      * @param string $text
+     * @param bool $inline
      * @return string
      */
-    public function markdown(string $text = null): string
+    public function markdown(string $text = null, bool $inline = false): string
     {
-        return $this->extensions['components']['markdown']($this, $text, $this->options['markdown'] ?? []);
+        return $this->component('markdown')($this, $text, $this->options['markdown'] ?? [], $inline);
     }
 
     /**
@@ -792,6 +851,7 @@ class App
     /**
      * Path resolver for the router
      *
+     * @internal
      * @param string $path
      * @param string|null $language
      * @return mixed
@@ -807,33 +867,36 @@ class App
         // the site is needed a couple times here
         $site = $this->site();
 
+        // use the home page
         if ($path === null) {
-            return $site->homePage();
+            if ($homePage = $site->homePage()) {
+                return $homePage;
+            }
+
+            throw new NotFoundException('The home page does not exist');
         }
 
-        if ($page = $site->find($path)) {
-            return $page;
-        }
+        // search for the page by path
+        $page = $site->find($path);
 
-        if ($draft = $site->draft($path)) {
+        // search for a draft if the page cannot be found
+        if (!$page && $draft = $site->draft($path)) {
             if ($this->user() || $draft->isVerified(get('token'))) {
-                return $draft;
+                $page = $draft;
             }
         }
 
         // try to resolve content representations if the path has an extension
         $extension = F::extension($path);
 
-        // remove the extension from the path
-        $path = Str::rtrim($path, '.' . $extension);
-
-        // stop when there's no extension
+        // no content representation? then return the page
         if (empty($extension) === true) {
-            return null;
+            return $page;
         }
 
-        // try to find the page for the representation
-        if ($page = $site->find($path)) {
+        // only try to return a representation
+        // when the page has been found
+        if ($page) {
             try {
                 return $this
                     ->response()
@@ -845,7 +908,7 @@ class App
         }
 
         $id       = dirname($path);
-        $filename = basename($path) . '.' . $extension;
+        $filename = basename($path);
 
         // try to resolve image urls for pages and drafts
         if ($page = $site->findPageOrDraft($id)) {
@@ -910,6 +973,7 @@ class App
     /**
      * Returns the Router singleton
      *
+     * @internal
      * @return Router
      */
     public function router(): Router
@@ -920,6 +984,7 @@ class App
     /**
      * Returns all defined routes
      *
+     * @internal
      * @return array
      */
     public function routes(): array
@@ -1051,23 +1116,25 @@ class App
     /**
      * Applies the smartypants rule on the text
      *
+     * @internal
      * @param string $text
      * @return string
      */
     public function smartypants(string $text = null): string
     {
-        return $this->extensions['components']['smartypants']($this, $text, $this->options['smartypants'] ?? []);
+        return $this->component('smartypants')($this, $text, $this->options['smartypants'] ?? []);
     }
 
     /**
      * Uses the snippet component to create
      * and return a template snippet
      *
+     * @internal
      * @return Snippet
      */
     public function snippet(string $name, array $data = []): ?string
     {
-        return $this->extensions['components']['snippet']($this, $name, array_merge($this->data, $data));
+        return $this->component('snippet')($this, $name, array_merge($this->data, $data));
     }
 
     /**
@@ -1084,11 +1151,12 @@ class App
      * Uses the template component to initialize
      * and return the Template object
      *
+     * @internal
      * @return Template
      */
     public function template(string $name, string $type = 'html', string $defaultType = 'html'): Template
     {
-        return $this->extensions['components']['template']($this, $name, $type, $defaultType);
+        return $this->component('template')($this, $name, $type, $defaultType);
     }
 
     /**
@@ -1097,16 +1165,17 @@ class App
      * @param string $src
      * @param string $dst
      * @param array $options
-     * @return null
+     * @return string
      */
-    public function thumb(string $src, string $dst, array $options = [])
+    public function thumb(string $src, string $dst, array $options = []): string
     {
-        return $this->extensions['components']['thumb']($this, $src, $dst, $options);
+        return $this->component('thumb')($this, $src, $dst, $options);
     }
 
     /**
-     *  Trigger a hook by name
+     * Trigger a hook by name
      *
+     * @internal
      * @param string $name
      * @param mixed ...$arguments
      * @return void
@@ -1114,9 +1183,11 @@ class App
     public function trigger(string $name, ...$arguments)
     {
         if ($functions = $this->extension('hooks', $name)) {
+            static $level = 0;
             static $triggered = [];
+            $level++;
 
-            foreach ($functions as $function) {
+            foreach ($functions as $index => $function) {
                 if (in_array($function, $triggered[$name] ?? []) === true) {
                     continue;
                 }
@@ -1126,6 +1197,12 @@ class App
 
                 // bind the App object to the hook
                 $function->call($this, ...$arguments);
+            }
+
+            $level--;
+
+            if ($level === 0) {
+                $triggered = [];
             }
         }
     }
@@ -1160,6 +1237,16 @@ class App
     public static function version()
     {
         return static::$version = static::$version ?? Data::read(static::$root . '/composer.json')['version'] ?? null;
+    }
+
+    /**
+     * Creates a hash of the version number
+     *
+     * @return string
+     */
+    public static function versionHash(): string
+    {
+        return md5(static::version());
     }
 
     /**

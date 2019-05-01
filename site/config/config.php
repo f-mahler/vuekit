@@ -3,18 +3,15 @@
 use Kirby\Cms\Form;
 
 return [
-  'panel' => array('css' => '/site/assets/css/panel.css'),
-  'debug' => false,
+  'debug' => true,
   'api' => [
     'basicAuth' => true,
     'routes' => [
       [
         'pattern' => 'data',
         'action'  => function() {
-
           $site = $this->site();
-
-          function content($pageId) {
+          function md($pageId) {
             $collection = [];
             $content = $pageId->content();
             foreach($content->fields() as $field) {
@@ -24,7 +21,6 @@ return [
             }
             return $collection;
           }
-
           function files($page) {
             $files = [];
             foreach ($page->files()->sortBy('sort', 'asc') as $file) {
@@ -45,7 +41,6 @@ return [
             }
             return $files;
           }
-
           function children($pageId) {
             $children = [];
             foreach ($pageId->children() as $child) {
@@ -55,7 +50,7 @@ return [
                 'status' => $child->status(),
                 'template' => $child->intendedTemplate()->name(),
                 'content' => Form::for($child)->values(),
-                'markdown' => content($child),
+                'markdown' => md($child),
                 'files' => files($child),
                 'children' => children($child)
               );
@@ -63,14 +58,12 @@ return [
             }
             return $children;
           }
-
           $sitedata = array(
             'title' => $site->title()->value(),
             'url' => $site->url(),
             'content' => Form::for($site)->values(),
-            'markdown' => content($site),
+            'markdown' => md($site),
           );
-
           $pages = [];
           foreach ($site->children() as $id) {
             $page = $this->page($id);
@@ -80,19 +73,16 @@ return [
               'status' => $page->status(),
               'template' => $page->intendedTemplate()->name(),
               'content' => Form::for($page)->values(),
-              // 'markdown' => content($page),
-              'markdown' => content($page),
+              'markdown' => md($page),
               'files' => files($page),
               'children' => children($page)
             );
             array_push($pages, $pagedata);
           }
-
           $data = array(
             'site' => $sitedata,
-            'pages' => $pages
+            'pages' => $pages,
           );
-
           return json_encode($data, true);
         }
       ]

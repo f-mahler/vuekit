@@ -1,4 +1,5 @@
 title: API
+description: API Access
 extends: users/default
 
 permissions:

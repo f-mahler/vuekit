@@ -3,12 +3,20 @@
 namespace Kirby\Toolkit;
 
 use Exception;
-use Throwable;
 use Kirby\Http\Header;
+use Throwable;
 use ZipArchive;
 
 /**
- * Low level file handling utilities
+ * The `F` class provides methods for
+ * dealing with files on the file system
+ * level, like creating, reading,
+ * deleting, copying or validatings files.
+ *
+ * @package   Kirby Toolkit
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      http://getkirby.com
+ * @copyright Bastian Allgeier
  */
 class F
 {
@@ -257,6 +265,21 @@ class F
     }
 
     /**
+     * Invalidate opcode cache for file.
+     *
+     * @param  string $file The path of the file
+     * @return boolean
+     */
+    public static function invalidateOpcodeCache(string $file): bool
+    {
+        if (function_exists('opcache_invalidate') && strlen(ini_get('opcache.restrict_api')) === 0) {
+            return opcache_invalidate($file, true);
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Checks if a file is of a certain type
      *
      * @param string $file Full path to the file
@@ -324,7 +347,11 @@ class F
             throw new Exception(sprintf('The file "%s" does not exist and cannot be linked', $source));
         }
 
-        return $method($source, $link);
+        try {
+            return $method($source, $link) === true;
+        } catch (Throwable $e) {
+            return false;
+        }
     }
 
     /**
@@ -534,7 +561,7 @@ class F
             $parent = realpath($in);
 
             if ($parent === false || is_dir($parent) === false) {
-                throw new Exception(sprintf('The parent directory does not exist: "%s"', $parent));
+                throw new Exception(sprintf('The parent directory does not exist: "%s"', $in));
             }
 
             if (substr($realpath, 0, strlen($parent)) !== $parent) {

@@ -9,38 +9,10 @@ options:
 sections:
   published:
     headline: Published
-    type: pagetable
+    type: pages
     status: published
-    sortBy: year desc
-    columns:
-      title:
-        label: Title
-        text: '{{ page.title }}'
-        width: 2/3
-      category:
-        label: Category
-        text: '{{ page.category.toLabel }}'
-        width: 1/4
-      year:
-        label: Year
-        text: '{{ page.year }}'
-        width: 1/6
   drafts:
     headline: Drafts
-    type: pagetable
+    type: pages
     status: drafts
     template: project
-    sortBy: year desc
-    columns:
-      title:
-        label: Title
-        text: '{{ page.title }}'
-        width: 2/3
-      category:
-        label: Category
-        text: '{{ page.category.toLabel }}'
-        width: 1/4
-      year:
-        label: Year
-        text: '{{ page.year }}'
-        width: 1/6

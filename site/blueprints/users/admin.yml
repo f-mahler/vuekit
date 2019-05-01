@@ -1,1 +1,3 @@
 title: Admin
+description: Access to everything
+extends: users/default

@@ -4,6 +4,7 @@ namespace Kirby\Cms;
 
 use Exception;
 use Kirby\Http\Response;
+use Kirby\Http\Uri;
 use Kirby\Toolkit\Dir;
 use Kirby\Toolkit\F;
 use Kirby\Toolkit\View;
@@ -29,7 +30,7 @@ class Panel
     {
         $mediaRoot   = $kirby->root('media') . '/panel';
         $panelRoot   = $kirby->root('panel') . '/dist';
-        $versionHash = md5($kirby->version());
+        $versionHash = $kirby->versionHash();
         $versionRoot = $mediaRoot . '/' . $versionHash;
 
         // check if the version already exists
@@ -62,20 +63,26 @@ class Panel
         try {
             if (static::link($kirby) === true) {
                 usleep(1);
-                go($kirby->request()->url());
+                go($kirby->url('index') . '/' . $kirby->path());
             }
         } catch (Throwable $e) {
             die('The panel assets cannot be installed properly. Please check permissions of your media folder.');
         }
 
+        // get the uri object for the panel url
+        $uri = new Uri($url = $kirby->url('panel'));
+
+        $pluginCss = new PanelPlugins('css');
+        $pluginJs  = new PanelPlugins('js');
+
         $view = new View($kirby->root('kirby') . '/views/panel.php', [
             'kirby'     => $kirby,
             'config'    => $kirby->option('panel'),
-            'assetUrl'  => $kirby->url('media') . '/panel/' . md5($kirby->version()),
-            'pluginCss' => $kirby->url('media') . '/plugins/index.css',
-            'pluginJs'  => $kirby->url('media') . '/plugins/index.js',
+            'assetUrl'  => $kirby->url('media') . '/panel/' . $kirby->versionHash(),
+            'pluginCss' => $pluginCss->url(),
+            'pluginJs'  => $pluginJs->url(),
             'icons'     => F::read($kirby->root('panel') . '/dist/img/icons.svg'),
-            'panelUrl'  => $url = $kirby->url('panel'),
+            'panelUrl'  => $uri->path()->toString(true) . '/',
             'options'   => [
                 'url'         => $url,
                 'site'        => $kirby->url('index'),

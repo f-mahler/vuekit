@@ -104,18 +104,18 @@
   "error.section.files.max.singular":
     "Anda hanya boleh menambahkan satu berkas ke bagian \"{section}\"",
   "error.section.files.min.plural":
-    "Tambahkan setidaknya {min} berkas ke bagian \"{section}\"",
+    "The \"{section}\" section requires at least {min} files",
   "error.section.files.min.singular":
-    "Tambahkan setidaknya satu berkas ke bagian \"{section}\"",
+    "The \"{section}\" section requires at least one file",
 
   "error.section.pages.max.plural":
     "Anda hanya boleh menambahkan maksimal {max} halaman ke bagian \"{section}\"",
   "error.section.pages.max.singular":
     "Anda hanya boleh menambahkan satu halaman ke bagian \"{section}\"",
   "error.section.pages.min.plural":
-    "Tambahkan setidaknya {min} halaman ke bagian \"{section}\"",
+    "The \"{section}\" section requires at least {min} pages",
   "error.section.pages.min.singular":
-    "Tambahkan setidaknya satu halaman ke bagian \"{section}\"",
+    "The \"{section}\" section requires at least one page",
 
   "error.section.notLoaded": "Bagian \"{name}\" tidak dapat dimuat",
   "error.section.type.invalid": "Tipe bagian \"{type}\" tidak valid",
@@ -365,6 +365,9 @@
   "toolbar.button.heading.2": "Penajukan 2",
   "toolbar.button.heading.3": "Penajukan 3",
   "toolbar.button.italic": "Miring",
+  "toolbar.button.file": "Berkas",
+  "toolbar.button.file.select": "Select a file",
+  "toolbar.button.file.upload": "Upload a file",
   "toolbar.button.link": "Tautan",
   "toolbar.button.ol": "Daftar berurut",
   "toolbar.button.ul": "Daftar tidak berurut",
@@ -395,6 +398,8 @@
   "user.delete": "Hapus pengguna ini",
   "user.delete.confirm":
     "Anda yakin menghapus <br><strong>{email}</strong>?",
+
+  "users": "Pengguna",
 
   "version": "Versi",
 

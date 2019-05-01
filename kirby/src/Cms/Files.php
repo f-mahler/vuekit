@@ -3,10 +3,17 @@
 namespace Kirby\Cms;
 
 /**
- * An extended version of the Collection
- * class, that has custom find methods and
- * a Files::factory method to convert an array
- * into a Files collection.
+ * The `$files` object extends the general
+ * `Collection` class and refers to a
+ * collection of files, i.e. images, documents
+ * etc. Files can be filtered, searched,
+ * converted, modified or evaluated with the
+ * following methods:
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      http://getkirby.com
+ * @copyright Bastian Allgeier
  */
 class Files extends Collection
 {
@@ -48,17 +55,16 @@ class Files extends Collection
      * Sort all given files by the
      * order in the array
      *
-     * @param array $files
+     * @param array $files List of filenames
+     * @param int $offset Sorting offset
      * @return self
      */
-    public function changeSort(array $files)
+    public function changeSort(array $files, int $offset = 0)
     {
-        $index = 0;
-
         foreach ($files as $filename) {
             if ($file = $this->get($filename)) {
-                $index++;
-                $file->changeSort($index);
+                $offset++;
+                $file->changeSort($offset);
             }
         }
 

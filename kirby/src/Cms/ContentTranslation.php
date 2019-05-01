@@ -82,12 +82,22 @@ class ContentTranslation
      */
     public function content(): array
     {
-        $parent  = $this->parent();
-        $content = $this->content ?? $parent->readContent($this->code());
+        $parent = $this->parent();
+
+        if ($this->content === null) {
+            $this->content = $parent->readContent($this->code());
+        }
+
+        $content = $this->content;
 
         // merge with the default content
         if ($this->isDefault() === false && $defaultLanguage = $parent->kirby()->defaultLanguage()) {
-            $default = $parent->translation($defaultLanguage->code())->content();
+            $default = [];
+
+            if ($defaultTranslation = $parent->translation($defaultLanguage->code())) {
+                $default = $defaultTranslation->content();
+            }
+
             $content = array_merge($default, $content);
         }
 

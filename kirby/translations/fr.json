@@ -104,18 +104,18 @@
   "error.section.files.max.singular":
     "Vous ne pouvez ajouter plus d’un fichier à la section «&nbsp;{section}&nbsp;»",
   "error.section.files.min.plural":
-    "Ajoutez au moins {min} fichiers à la section «&nbsp;{section}&nbsp;»",
+    "The \"{section}\" section requires at least {min} files",
   "error.section.files.min.singular":
-    "Ajoutez au moins un fichier à la section «&nbsp;{section}&nbsp;»",
+    "The \"{section}\" section requires at least one file",
 
   "error.section.pages.max.plural":
     "Vous ne pouvez ajouter plus de {max} pages à la section «&nbsp;{section}&nbsp;»",
   "error.section.pages.max.singular":
     "Vous ne pouvez ajouter plus d’une page à la section «&nbsp;{section}&nbsp;»",
   "error.section.pages.min.plural":
-    "Ajoutez au moins {min} pages à la section «&nbsp;{section}&nbsp;»",
+    "The \"{section}\" section requires at least {min} pages",
   "error.section.pages.min.singular":
-    "Ajoutez au moins une page à la section «&nbsp;{section}&nbsp;»",
+    "The \"{section}\" section requires at least one page",
 
   "error.section.notLoaded": "La section «&nbsp;{name}&nbsp;» n’a pu être chargée",
   "error.section.type.invalid": "Le type de section «&nbsp;{type}&nbsp;» est incorrect",
@@ -365,6 +365,9 @@
   "toolbar.button.heading.2": "Titre 2",
   "toolbar.button.heading.3": "Titre 3",
   "toolbar.button.italic": "Italique",
+  "toolbar.button.file": "Fichier",
+  "toolbar.button.file.select": "Sélectionner un fichier",
+  "toolbar.button.file.upload": "Transférer un fichier",
   "toolbar.button.link": "Lien",
   "toolbar.button.ol": "Liste ordonnée",
   "toolbar.button.ul": "Liste non-ordonnée",
@@ -395,6 +398,8 @@
   "user.delete": "Supprimer cet utilisateur",
   "user.delete.confirm":
     "Voulez-vous vraiment supprimer <br><strong>{email}</strong>?",
+
+  "users": "Utilisateurs",
 
   "version": "Version",
 

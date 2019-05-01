@@ -185,8 +185,15 @@ trait UserActions
 
             $user->writePassword($user->password());
 
+            // always create users in the default language
+            if ($user->kirby()->multilang() === true) {
+                $languageCode = $user->kirby()->defaultLanguage()->code();
+            } else {
+                $languageCode = null;
+            }
+
             // write the user data
-            return $user->save();
+            return $user->save($user->content()->toArray(), $languageCode);
         });
     }
 
@@ -277,9 +284,7 @@ trait UserActions
      */
     protected function writeCredentials(array $credentials): bool
     {
-        $export = '<?php' . PHP_EOL . PHP_EOL . 'return ' . var_export($credentials, true) . ';';
-
-        return F::write($this->root() . '/index.php', $export);
+        return Data::write($this->root() . '/index.php', $credentials);
     }
 
     /**

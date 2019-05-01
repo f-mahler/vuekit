@@ -5,7 +5,9 @@ namespace Kirby\Toolkit;
 use Exception;
 
 /**
- * A set of handy string methods
+ * The String class provides a set
+ * of handy methods for string
+ * handling and manipulation.
  *
  * @package   Kirby Toolkit
  * @author    Bastian Allgeier <bastian@getkirby.com>
@@ -346,8 +348,8 @@ class Str
     public static function float($value): string
     {
         $value   = str_replace(',', '.', $value);
-        $decimal = strlen(substr(strrchr($value, "."), 1));
-        return number_format((float)$value, $decimal);
+        $decimal = strlen(substr(strrchr($value, '.'), 1));
+        return number_format((float)$value, $decimal, '.', false);
     }
 
     /**

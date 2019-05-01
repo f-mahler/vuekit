@@ -2,6 +2,7 @@
 
 namespace Kirby\Cms;
 
+use Kirby\Http\Response;
 use Kirby\Toolkit\Dir;
 use Kirby\Toolkit\F;
 
@@ -12,49 +13,6 @@ use Kirby\Toolkit\F;
  */
 class PluginAssets
 {
-
-    /**
-     * Concatenate all plugin js and css files into
-     * a single file and copy them to /media/plugins/index.css or /media/plugins/index.js
-     *
-     * @param string $extension
-     * @return string
-     */
-    public static function index(string $extension): string
-    {
-        $kirby    = App::instance();
-        $cache    = $kirby->root('media') . '/plugins/.index.' . $extension;
-        $build    = false;
-        $modified = [0];
-        $assets   = [];
-
-        foreach ($kirby->plugins() as $plugin) {
-            $file = $plugin->root() . '/index.' . $extension;
-
-            if (file_exists($file) === true) {
-                $assets[]   = $file;
-                $modified[] = F::modified($file);
-            }
-        }
-
-        if (empty($assets)) {
-            return false;
-        }
-
-        if (file_exists($cache) === false || filemtime($cache) < max($modified)) {
-            $dist = [];
-            foreach ($assets as $asset) {
-                $dist[] = file_get_contents($asset);
-            }
-            $dist = implode(PHP_EOL, $dist);
-            F::write($cache, $dist);
-        } else {
-            $dist = file_get_contents($cache);
-        }
-
-        return $dist;
-    }
-
     /**
      * Clean old/deprecated assets on every resolve
      *
@@ -104,9 +62,14 @@ class PluginAssets
                 $target = $plugin->mediaRoot() . '/' . $filename;
                 $url    = $plugin->mediaUrl() . '/' . $filename;
 
-                F::link($source, $target, 'symlink');
+                // create the plugin directory first
+                Dir::make($plugin->mediaRoot(), true);
 
-                return $url;
+                if (F::link($source, $target, 'symlink') === true) {
+                    return Response::redirect($url);
+                }
+
+                return Response::file($source);
             }
         }
 

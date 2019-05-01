@@ -1,5 +1,6 @@
 title: Editor
 extends: users/default
+description: Access to panel, site
 
 permissions:
   access:

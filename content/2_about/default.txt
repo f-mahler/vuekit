@@ -2,7 +2,7 @@ Title: About
 
 ----
 
-Intro: Lorem Ipsum bla bla bla
+Text-md: Test test
 
 ----
 

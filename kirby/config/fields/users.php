@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mixins' => ['min'],
     'props' => [
         /**
          * Unset inherited props
@@ -26,6 +27,12 @@ return [
             }
 
             return $this->toUsers($default);
+        },
+        /**
+         * The placeholder text if no users have been selected yet
+         */
+        'empty' => function ($empty = null) {
+            return I18n::translate($empty, $empty);
         },
         /**
          * The minimum number of required selected users

@@ -104,18 +104,18 @@
   "error.section.files.max.singular":
     "Bitte füge nicht mehr als eine Datei zum Bereich \"{section}\" hinzu",
   "error.section.files.min.plural":
-    "Bitte füge mindestens {min} Dateien zum Bereich \"{section}\" hinzu",
+    "Der Bereich \"{section}\" benötigt mindestens {min} Dateien",
   "error.section.files.min.singular":
-    "Bitte füge mindestens eine Datei zum Bereich \"{section}\" hinzu",
+    "Der Bereich \"{section}\" benötigt mindestens eine Datei",
 
   "error.section.pages.max.plural":
     "Bitte füge nicht mehr als {max} Seiten zum Bereich \"{section}\" hinzu",
   "error.section.pages.max.singular":
     "Bitte füge nicht mehr als eine Seite zum Bereich \"{section}\" hinzu",
   "error.section.pages.min.plural":
-    "Bitte füge mindestens {min} Seiten zum Bereich \"{section}\" hinzu",
+    "Der Bereich \"{section}\" benötigt mindestens {min} Seiten",
   "error.section.pages.min.singular":
-    "Bitte füge mindestens eine Seite zum Bereich \"{section}\" hinzu",
+    "Der Bereich \"{section}\" benötigt mindestens eine Seite",
 
   "error.section.notLoaded": "Der Bereich \"{name}\" konnte nicht geladen werden",
   "error.section.type.invalid": "Der Bereichstyp \"{type}\" ist nicht gültig",
@@ -365,6 +365,9 @@
   "toolbar.button.heading.2": "Überschrift 2",
   "toolbar.button.heading.3": "Überschrift 3",
   "toolbar.button.italic": "Kursiver Text",
+  "toolbar.button.file": "Datei",
+  "toolbar.button.file.select": "Datei auswählen",
+  "toolbar.button.file.upload": "Datei hochladen",
   "toolbar.button.link": "Link",
   "toolbar.button.ol": "Geordnete Liste",
   "toolbar.button.ul": "Ungeordnete Liste",
@@ -395,6 +398,8 @@
   "user.delete": "Benutzer löschen",
   "user.delete.confirm":
     "Willst du den Benutzer <br><strong>{email}</strong> wirklich löschen?",
+
+  "users": "Benutzer",
 
   "version": "Version",
 

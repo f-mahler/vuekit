@@ -53,12 +53,14 @@ trait AppTranslations
      * Load and set the current language if it exists
      * Otherwise fall back to the default language
      *
+     * @internal
      * @param string $languageCode
      * @return Language|null
      */
     public function setCurrentLanguage(string $languageCode = null)
     {
-        if ($languageCode === null) {
+        if ($this->multilang() === false) {
+            $this->setLocale($this->option('locale', 'en_US.utf-8'));
             return $this->language = null;
         }
 
@@ -69,7 +71,7 @@ trait AppTranslations
         }
 
         if ($this->language) {
-            setlocale(LC_ALL, $this->language->locale());
+            $this->setLocale($this->language->locale());
         }
 
         return $this->language;
@@ -78,12 +80,30 @@ trait AppTranslations
     /**
      * Set the current translation
      *
+     * @internal
      * @param string $translationCode
      * @return void
      */
     public function setCurrentTranslation(string $translationCode = null)
     {
         I18n::$locale = $translationCode ?? 'en';
+    }
+
+    /**
+     * Set locale settings
+     *
+     * @internal
+     * @param string|array $locale
+     */
+    public function setLocale($locale)
+    {
+        if (is_array($locale) === true) {
+            foreach ($locale as $key => $value) {
+                setlocale($key, $value);
+            }
+        } else {
+            setlocale(LC_ALL, $locale);
+        }
     }
 
     /**

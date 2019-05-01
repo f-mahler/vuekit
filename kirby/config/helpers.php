@@ -105,16 +105,13 @@ function css($url, $options = null)
 
     $kirby = App::instance();
 
-    if ($component = $kirby->component('css')) {
-        $url = $component($kirby, $url, $options);
-    }
-
     if ($url === '@auto') {
         if (!$url = Url::toTemplateAsset('css/templates', 'css')) {
             return null;
         }
     }
 
+    $url  = $kirby->component('css')($kirby, $url, $options);
     $url  = Url::to($url);
     $attr = array_merge((array)$options, [
         'href' => $url,
@@ -264,10 +261,20 @@ function image(string $path = null)
         $uri = null;
     }
 
-    $page = $uri === '/' ? site() : page($uri);
+    switch ($uri) {
+        case '/':
+            $parent = site();
+            break;
+        case null:
+            $parent = page();
+            break;
+        default:
+            $parent = page($uri);
+            break;
+    }
 
-    if ($page) {
-        return $page->image($filename);
+    if ($parent) {
+        return $parent->image($filename);
     } else {
         return null;
     }
@@ -359,16 +366,13 @@ function js($url, $options = null)
 
     $kirby = App::instance();
 
-    if ($component = $kirby->component('js')) {
-        $url = $component($kirby, $url, $options);
-    }
-
     if ($url === '@auto') {
         if (!$url = Url::toTemplateAsset('js/templates', 'js')) {
             return null;
         }
     }
 
+    $url  = $kirby->component('js')($kirby, $url, $options);
     $url  = Url::to($url);
     $attr = array_merge((array)$options, ['src' => $url]);
 
@@ -426,6 +430,45 @@ function kirbytags(string $text = null, array $data = []): string
 function kirbytext(string $text = null, array $data = []): string
 {
     return App::instance()->kirbytext($text, $data);
+}
+
+/**
+ * Parses KirbyTags and inline Markdown in the
+ * given string.
+ * @since 3.1.0
+ *
+ * @param string $text
+ * @param array $data
+ * @return string
+ */
+function kirbytextinline(string $text = null, array $data = []): string
+{
+    return App::instance()->kirbytext($text, $data, true);
+}
+
+/**
+ * Shortcut for `kirbytext()` helper
+ *
+ * @param string $text
+ * @param array $data
+ * @return string
+ */
+function kt(string $text = null, array $data = []): string
+{
+    return kirbytext($text, $data);
+}
+
+/**
+ * Shortcut for `kirbytextinline()` helper
+ * @since 3.1.0
+ *
+ * @param string $text
+ * @param array $data
+ * @return string
+ */
+function kti(string $text = null, array $data = []): string
+{
+    return kirbytextinline($text, $data);
 }
 
 /**
@@ -672,12 +715,7 @@ function svg(string $file)
         }
     }
 
-    ob_start();
-    include $file;
-    $svg = ob_get_contents();
-    ob_end_clean();
-
-    return $svg;
+    return F::read($file);
 }
 
 /**

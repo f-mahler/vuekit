@@ -151,6 +151,12 @@ class Field extends Component
                     return $translate;
                 },
                 /**
+                 * Conditions when the field will be shown
+                 */
+                'when' => function ($when = null) {
+                    return $when;
+                },
+                /**
                  * The width of the field in the field grid. Available widths: 1/1, 1/2, 1/3, 1/4, 2/3, 3/4
                  */
                 'width' => function (string $width = '1/1') {

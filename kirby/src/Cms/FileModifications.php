@@ -91,6 +91,46 @@ trait FileModifications
     }
 
     /**
+     * Create a srcset definition for the given sizes
+     * Sizes can be defined as a simple array. They can
+     * also be set up in the config with the thumbs.srcsets option.
+     * @since 3.1.0
+     *
+     * @param array|string $sizes
+     * @return string
+     */
+    public function srcset($sizes = null): ?string
+    {
+        if (empty($sizes) === true) {
+            $sizes = $this->kirby()->option('thumbs.srcsets.default', []);
+        }
+
+        if (is_string($sizes) === true) {
+            $sizes = $this->kirby()->option('thumbs.srcsets.' . $sizes, []);
+        }
+
+        if (is_array($sizes) === false || empty($sizes) === true) {
+            return null;
+        }
+
+        $set = [];
+
+        foreach ($sizes as $key => $value) {
+            if (is_string($value) === true) {
+                $size = $key;
+                $attr = $value;
+            } else {
+                $size = $value;
+                $attr = $value . 'w';
+            }
+
+            $set[] = $this->resize($size)->url() . ' ' . $attr;
+        }
+
+        return implode(', ', $set);
+    }
+
+    /**
      * Creates a modified version of images
      * The media manager takes care of generating
      * those modified versions and putting them
@@ -99,12 +139,19 @@ trait FileModifications
      * could potentially also be a CDN or any other
      * place.
      *
-     * @param array|null $options
+     * @param array|null|string $options
      * @return FileVersion|File
      */
-    public function thumb(array $options = null)
+    public function thumb($options = null)
     {
+        // thumb presets
         if (empty($options) === true) {
+            $options = $this->kirby()->option('thumbs.presets.default');
+        } elseif (is_string($options) === true) {
+            $options = $this->kirby()->option('thumbs.presets.' . $options);
+        }
+
+        if (empty($options) === true || is_array($options) === false) {
             return $this;
         }
 
