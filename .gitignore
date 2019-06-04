@@ -38,3 +38,6 @@ Icon
 /vendor/*/
 /composer.lock
 /vendor/*.php
+/package-lock.json
+package-lock.json
+/storage
