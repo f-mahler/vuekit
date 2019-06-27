@@ -11,7 +11,6 @@ tabs:
         headline: Pages
         type: pages
         status: published
-        # layout: cards
         image: false
       invisible:
         headline: Invisible

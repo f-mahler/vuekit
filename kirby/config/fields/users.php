@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'mixins' => ['min'],
+    'mixins' => ['min', 'picker', 'userpicker'],
     'props' => [
         /**
          * Unset inherited props
@@ -13,7 +13,7 @@ return [
         'placeholder' => null,
 
         /**
-         * Default selected user(s) when a new Page/File/User is created
+         * Default selected user(s) when a new page/file/user is created
          */
         'default' => function ($default = null) {
             if ($default === false) {
@@ -28,52 +28,18 @@ return [
 
             return $this->toUsers($default);
         },
-        /**
-         * The placeholder text if no users have been selected yet
-         */
-        'empty' => function ($empty = null) {
-            return I18n::translate($empty, $empty);
-        },
-        /**
-         * The minimum number of required selected users
-         */
-        'min' => function (int $min = null) {
-            return $min;
-        },
-        /**
-         * The maximum number of allowed selected users
-         */
-        'max' => function (int $max = null) {
-            return $max;
-        },
-        /**
-         * If false, only a single user can be selected
-         */
-        'multiple' => function (bool $multiple = true) {
-            return $multiple;
-        },
+
         'value' => function ($value = null) {
             return $this->toUsers($value);
         },
     ],
     'methods' => [
         'userResponse' => function ($user) {
-            $avatar = function ($user) {
-                if ($avatar = $user->avatar()) {
-                    return [
-                        'url' => $avatar->crop(512)->url()
-                    ];
-                }
-
-                return null;
-            };
-
-            return [
-                'username' => $user->username(),
-                'id'       => $user->id(),
-                'email'    => $user->email(),
-                'avatar'   => $avatar($user)
-            ];
+            return $user->panelPickerData([
+                'info'  => $this->info,
+                'image' => $this->image,
+                'text'  => $this->text,
+            ]);
         },
         'toUsers' => function ($value = null) {
             $users = [];
@@ -92,6 +58,23 @@ return [
             return $users;
         }
     ],
+    'api' => function () {
+        return [
+            [
+                'pattern' => '/',
+                'action' => function () {
+                    $field = $this->field();
+
+                    return $field->userpicker([
+                        'query' => $field->query(),
+                        'image' => $field->image(),
+                        'info'  => $field->info(),
+                        'text'  => $field->text()
+                    ]);
+                }
+            ]
+        ];
+    },
     'save' => function ($value = null) {
         return A::pluck($value, 'email');
     },

@@ -10,9 +10,9 @@ use Kirby\Http\Url;
  *
  * @package   Kirby Toolkit
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
- * @copyright Bastian Allgeier
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier GmbH
+ * @license   https://opensource.org/licenses/MIT
  */
 class Html
 {
@@ -52,29 +52,24 @@ class Html
     }
 
     /**
-     * Generates an a tag
+     * Generates an `a` tag
      *
-     * @param string $href The url for the a tag
-     * @param mixed $text The optional text. If null, the url will be used as text
+     * @param string $href The url for the `a` tag
+     * @param mixed $text The optional text. If `null`, the url will be used as text
      * @param array $attr Additional attributes for the tag
      * @return string the generated html
      */
     public static function a(string $href = null, $text = null, array $attr = []): string
     {
-        $attr = array_merge(['href' => $href], $attr);
-
-        if (empty($text) === true) {
-            $text = $href;
+        if (Str::startsWith($href, 'mailto:')) {
+            return static::email($href, $text, $attr);
         }
 
-        if (is_string($text) === true && Str::isUrl($text) === true) {
-            $text = Url::short($text);
+        if (Str::startsWith($href, 'tel:')) {
+            return static::tel($href, $text, $attr);
         }
 
-        // add rel=noopener to target blank links to improve security
-        $attr['rel'] = static::rel($attr['rel'] ?? null, $attr['target'] ?? null);
-
-        return static::tag('a', $text, $attr);
+        return static::link($href, $text, $attr);
     }
 
     /**
@@ -160,14 +155,14 @@ class Html
     }
 
     /**
-     * Generates an "a mailto" tag
+     * Generates an `a` tag with `mailto:`
      *
      * @param string $email The url for the a tag
      * @param mixed $text The optional text. If null, the url will be used as text
      * @param array $attr Additional attributes for the tag
      * @return string the generated html
      */
-    public static function email(string $email, string $text = null, array $attr = []): string
+    public static function email(string $email, $text = null, array $attr = []): string
     {
         if (empty($email) === true) {
             return '';
@@ -328,7 +323,33 @@ class Html
     }
 
     /**
-     * Add noopeener noreferrer to rels when target is _blank
+     * Generates an `a` link tag
+     *
+     * @param string $href The url for the `a` tag
+     * @param mixed $text The optional text. If `null`, the url will be used as text
+     * @param array $attr Additional attributes for the tag
+     * @return string the generated html
+     */
+    public static function link(string $href = null, $text = null, array $attr = []): string
+    {
+        $attr = array_merge(['href' => $href], $attr);
+
+        if (empty($text) === true) {
+            $text = $attr['href'];
+        }
+
+        if (is_string($text) === true && Str::isUrl($text) === true) {
+            $text = Url::short($text);
+        }
+
+        // add rel=noopener to target blank links to improve security
+        $attr['rel'] = static::rel($attr['rel'] ?? null, $attr['target'] ?? null);
+
+        return static::tag('a', $text, $attr);
+    }
+
+    /**
+     * Add noopeener noreferrer to rels when target is `_blank`
      *
      * @param string $rel
      * @param string $target
@@ -352,8 +373,8 @@ class Html
     /**
      * Generates an Html tag with optional content and attributes
      *
-     * @param string $name The name of the tag, i.e. "a"
-     * @param mixed $content The content if availble. Pass null to generate a self-closing tag, Pass an empty string to generate empty content
+     * @param string $name The name of the tag, i.e. `a`
+     * @param mixed $content The content if availble. Pass `null` to generate a self-closing tag, Pass an empty string to generate empty content
      * @param array $attr An associative array with additional attributes for the tag
      * @return string The generated Html
      */
@@ -383,10 +404,10 @@ class Html
 
 
     /**
-     * Generates an a tag for a phone number
+     * Generates an `a` tag for a phone number
      *
      * @param string $tel The phone number
-     * @param mixed $text The optional text. If null, the number will be used as text
+     * @param mixed $text The optional text. If `null`, the number will be used as text
      * @param array $attr Additional attributes for the tag
      * @return string the generated html
      */
@@ -398,13 +419,13 @@ class Html
             $text = $tel;
         }
 
-        return static::a('tel:' . $number, $text, $attr);
+        return static::link('tel:' . $number, $text, $attr);
     }
 
     /**
      * Creates a video embed via iframe for Youtube or Vimeo
      * videos. The embed Urls are automatically detected from
-     * the given Url.
+     * the given URL.
      *
      * @param string $url
      * @param array $options

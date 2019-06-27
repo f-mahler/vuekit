@@ -1,4 +1,4 @@
 /* eslint-disable indent */
 module.exports = {
-  baseUrl: '/dist/'
+  publicPath: '/dist/'
 }

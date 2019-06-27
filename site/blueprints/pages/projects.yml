@@ -1,7 +1,6 @@
 title: Projects
 
 options:
-  # status: false
   url: false
   delete: false
   changeTemplate: false
