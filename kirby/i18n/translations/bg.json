@@ -183,6 +183,9 @@
   "error.validation.contains":
     "Моля въведете стойност, която съдържа \"{needle}\"",
   "error.validation.date": "Моля въведете валидна дата",
+  "error.validation.date.after": "Please enter a date after {date}",
+  "error.validation.date.before": "Please enter a date before {date}",
+  "error.validation.date.between": "Please enter a date between {min} and {max}",
   "error.validation.denied": "Моля откажете",
   "error.validation.different": "Стойността не трябва да е \"{other}\"",
   "error.validation.email": "Моля въведете валиден email адрес",
@@ -262,6 +265,7 @@
   "language.direction.ltr": "Отляво надясно",
   "language.direction.rtl": "Отдясно наляво",
   "language.locale": "PHP locale string",
+  "language.locale.warning": "You are using a custom locale set up. Please modify it in the language file in /site/languages",
   "language.name": "Име",
   "language.updated": "Езикът беше обновен",
 

@@ -169,7 +169,6 @@
   "error.user.password.notSame": "The passwords do not match",
   "error.user.password.undefined": "The user does not have a password",
   "error.user.role.invalid": "Please enter a valid role",
-  "error.user.undefined": "The user cannot be found",
   "error.user.update.permission":
     "You are not allowed to update the user \"{name}\"",
 
@@ -183,6 +182,9 @@
   "error.validation.contains":
     "Please enter a value that contains \"{needle}\"",
   "error.validation.date": "Please enter a valid date",
+  "error.validation.date.after": "Please enter a date after {date}",
+  "error.validation.date.before": "Please enter a date before {date}",
+  "error.validation.date.between": "Please enter a date between {min} and {max}",
   "error.validation.denied": "Please deny",
   "error.validation.different": "The value must not be \"{other}\"",
   "error.validation.email": "Please enter a valid email address",
@@ -262,6 +264,7 @@
   "language.direction.ltr": "Left to right",
   "language.direction.rtl": "Right to left",
   "language.locale": "PHP locale string",
+  "language.locale.warning": "You are using a custom locale set up. Please modify it in the language file in /site/languages",
   "language.name": "Name",
   "language.updated": "The language has been updated",
 
