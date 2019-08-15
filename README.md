@@ -8,10 +8,11 @@ Inspired by Morgan Brown's [kirby-vue-starter-simple](https://github.com/mhgbrow
 ### Project setup
 ```
 1. npm install
-2. valet secure
-3. Install kirby via <url>.com/panel
-4. Add your username & password to /src/auth.js
-5. npm run build/dev
+2. composer install
+3. valet secure
+4. Install kirby via <url>.com/panel
+5. Add your username & password to /src/auth.js
+6. npm run build/dev
 ```
 
 ### Development
