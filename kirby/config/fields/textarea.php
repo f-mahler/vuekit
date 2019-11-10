@@ -10,7 +10,7 @@ return [
         'before' => null,
 
         /**
-         * Enables/disables the format buttons. Can either be `true`/`false` or a list of allowed buttons. Available buttons: `headlines`, `italic`, `bold`, `link`, `email`, `file`, `list`, `code`, `ul`, `ol` (as well as `|` for a divider)
+         * Enables/disables the format buttons. Can either be `true`/`false` or a list of allowed buttons. Available buttons: `headlines`, `italic`, `bold`, `link`, `email`, `file`, `code`, `ul`, `ol` (as well as `|` for a divider)
          */
         'buttons' => function ($buttons = true) {
             return $buttons;
@@ -73,6 +73,12 @@ return [
             return $size;
         },
 
+        /**
+         * If `false`, spellcheck will be switched off
+         */
+        'spellcheck' => function (bool $spellcheck = true) {
+            return $spellcheck;
+        },
 
         'value' => function (string $value = null) {
             return trim($value);
@@ -89,10 +95,15 @@ return [
             [
                 'pattern' => 'upload',
                 'action' => function () {
-                    return $this->field()->upload($this, $this->field()->uploads(), function ($file) {
+                    $field   = $this->field();
+                    $uploads = $field->uploads();
+
+                    return $this->field()->upload($this, $uploads, function ($file, $parent) use ($field) {
+                        $absolute = $field->model()->is($parent) === false;
+
                         return [
                             'filename' => $file->filename(),
-                            'dragText' => $file->dragText(),
+                            'dragText' => $file->dragText('auto', $absolute),
                         ];
                     });
                 }

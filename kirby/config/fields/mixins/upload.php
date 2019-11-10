@@ -2,11 +2,12 @@
 
 use Kirby\Cms\Api;
 use Kirby\Cms\File;
+use Kirby\Exception\Exception;
 
 return [
     'props' => [
         /**
-         * Sets the upload options for linked files
+         * Sets the upload options for linked files (since 3.2.0)
          */
         'uploads' => function ($uploads = []) {
             if ($uploads === false) {
@@ -64,7 +65,7 @@ return [
                     throw new Exception('The file could not be uploaded');
                 }
 
-                return $map($file);
+                return $map($file, $parent);
             });
         }
     ]

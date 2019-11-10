@@ -40,7 +40,9 @@ class Email
         $this->props = array_merge($this->preset, $props);
 
         // add transport settings
-        $this->props['transport'] = $this->options['transport'] ?? [];
+        if (isset($this->props['transport']) === false) {
+            $this->props['transport'] = $this->options['transport'] ?? [];
+        }
 
         // transform model objects to values
         foreach (static::$transform as $prop => $model) {
@@ -107,7 +109,7 @@ class Email
      *
      * @param string $name
      * @param string|null $type
-     * @return Kirby\Cms\Template
+     * @return \Kirby\Cms\Template
      */
     protected function getTemplate(string $name, string $type = null)
     {
