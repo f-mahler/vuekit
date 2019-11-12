@@ -7,14 +7,13 @@
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
 nav {
-  a {
-    padding-left:1rem;
-  }
+    a {
+        padding-left: var(--lh);
+    }
 }
 </style>

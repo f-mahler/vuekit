@@ -1,8 +1,10 @@
 <template>
-  <main class="about">
+<main class="about grid c-2">
+  <div>
     {{ about.title }}
-    {{ about.content.intro }}
-  </main>
+  </div>
+  <div v-html="about.markdown.text_md"></div>
+</main>
 </template>
 
 <script>
@@ -12,6 +14,15 @@ export default {
     about() {
       return this.$store.getters.getPageByUID('about')
     }
+  },
+  metaInfo() {
+    return {
+      title: this.about.title,
+      meta: [{
+        description: this.about.content.intro
+      }]
+    }
+
   }
 }
 </script>

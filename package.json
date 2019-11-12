@@ -1,6 +1,6 @@
 {
   "name": "vuekit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service build --watch",
@@ -12,6 +12,7 @@
     "reset-css": "^4.0.1",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
+    "vue-meta": "^2.3.1",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
