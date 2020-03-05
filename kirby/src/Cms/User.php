@@ -5,7 +5,6 @@ namespace Kirby\Cms;
 use Exception;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
-use Kirby\Exception\PermissionException;
 use Kirby\Session\Session;
 use Kirby\Toolkit\F;
 use Kirby\Toolkit\Str;
@@ -273,7 +272,8 @@ class User extends ModelWithContent
     }
 
     /**
-     * Hashes user password
+     * Hashes the user's password unless it is `null`,
+     * which will leave it as `null`
      *
      * @internal
      * @param string|null $password
@@ -282,11 +282,7 @@ class User extends ModelWithContent
     public static function hashPassword($password): ?string
     {
         if ($password !== null) {
-            $info = password_get_info($password);
-
-            if ($info['algo'] === 0) {
-                $password = password_hash($password, PASSWORD_DEFAULT);
-            }
+            $password = password_hash($password, PASSWORD_DEFAULT);
         }
 
         return $password;
@@ -408,7 +404,7 @@ class User extends ModelWithContent
      * @param \Kirby\Session\Session|array $session Session options or session object to set the user in
      * @return bool
      *
-     * @throws PermissionException If the password is not valid
+     * @throws \Kirby\Exception\PermissionException If the password is not valid
      */
     public function login(string $password, $session = null): bool
     {
@@ -434,6 +430,7 @@ class User extends ModelWithContent
 
         $session->regenerateToken(); // privilege change
         $session->data()->set('user.id', $this->id());
+        $this->kirby()->auth()->setUser($this);
 
         $kirby->trigger('user.login:after', $this, $session);
     }
@@ -451,7 +448,11 @@ class User extends ModelWithContent
 
         $kirby->trigger('user.logout:before', $this, $session);
 
+        // remove the user from the session for future requests
         $session->data()->remove('user.id');
+
+        // clear the cached user object from the app state of the current request
+        $this->kirby()->auth()->flush();
 
         if ($session->data()->get() === []) {
             // session is now empty, we might as well destroy it
@@ -769,7 +770,7 @@ class User extends ModelWithContent
     }
 
     /**
-     * Sets and hashes a new user password
+     * Sets the user's password hash
      *
      * @param string $password
      * @return self
@@ -872,9 +873,9 @@ class User extends ModelWithContent
      * @param string $password
      * @return bool
      *
-     * @throws NotFoundException If the user has no password
-     * @throws InvalidArgumentException If the entered password is not valid
-     * @throws InvalidArgumentException If the entered password does not match the user password
+     * @throws \Kirby\Exception\NotFoundException If the user has no password
+     * @throws \Kirby\Exception\InvalidArgumentException If the entered password is not valid
+     * @throws \Kirby\Exception\InvalidArgumentException If the entered password does not match the user password
      */
     public function validatePassword(string $password = null): bool
     {
