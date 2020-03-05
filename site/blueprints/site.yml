@@ -10,54 +10,23 @@ tabs:
       pages:
         headline: Pages
         type: pages
-        status: published
+        layout: cards
+        size: tiny
+        status: listed
         image: false
-      invisible:
-        headline: Invisible
-        type: pages
-        status: drafts
-
-  # Footer Tab
-  footer:
-    label: Footer
-    icon: angle-down
-    fields:
-      copyright:
-        label: Copyright
-        type: textarea
-      facebook:
-        label: Facebook Account
-        type: text
-        icon: facebook
-        before: https://facebook.com/
-        width: 1/2
-      instagram:
-        label: Instagram Account
-        type: text
-        icon: instagram
-        before: https://instagram.com/
-        width: 1/2
-
-  # Seo Tab
-  seo:
-    label: SEO
-    icon: search
-    columns:
-      - width: 2/3
-        sections:
-          seoContent:
-            type: fields
-            fields:
-              metaDescription:
-                label: SEO Description
-                help: Write help text
-                type: textarea
-                buttons: false
-
-      - width: 1/3
-        sections:
-          seoImages:
+      seo:
+        type: fields
+        fields:
+          line:
+            type: line
+          seoDescription:
+            label: SEO Description
+            help: Text appearing on search engines
+            type: textarea
+            buttons: false
+            width: 1/2
+          seoImage:
             type: files
-            headline: SEO Image
-            min: 1
+            label: SEO Image
             max: 1
+            width: 1/2

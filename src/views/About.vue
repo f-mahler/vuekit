@@ -3,26 +3,27 @@
   <div>
     {{ about.title }}
   </div>
-  <div v-html="about.markdown.text_md"></div>
+  <div v-html="about.text"></div>
 </main>
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
   name: 'about',
-  computed: {
-    about() {
-      return this.$store.getters.getPageByUID('about')
-    }
-  },
   metaInfo() {
     return {
-      title: this.about.title,
+      title: '– About',
       meta: [{
-        description: this.about.content.intro
+        description: this.about.text
       }]
     }
-
-  }
+  },
+  created() {
+    this.$store.dispatch('loadAbout');
+  },
+  computed: mapState(['about']),
 }
 </script>

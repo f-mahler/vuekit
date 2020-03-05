@@ -1,31 +1,28 @@
 <template>
 <main class="project grid c-2">
-  <h1>{{ project.title }}</h1>
-  <img :src="project.files[0].url" />
+  <div>
+    <h1>{{ project.title }}</h1>
+    <p>{{ project.year }}</p>
+    <p>{{ project.category }}</p>
+    <div v-html="project.description"></div>
+  </div>
+  <div>
+    <img v-for="(file, index) in project.images" :key="index" v-lazy="file.url" :src="file.thumb" />
+  </div>
 </main>
 </template>
 
 <script>
 export default {
-  data() {
+  name: 'project',
+  metaInfo() {
     return {
-      projectTitle: ''
+      title: '– ' + this.project.title,
     }
-  },
-  mounted() {
-    this.projectTitle = this.project.title
   },
   computed: {
     project() {
-      return this.$store.getters.getPageByUID(this.$route.params.id)
-    }
-  },
-  metaInfo() {
-    return {
-      title: this.projectTitle,
-      meta: [{
-        description: 'project description'
-      }]
+      return this.$store.getters.getProjectByUID(this.$route.params.id)
     }
   }
 }

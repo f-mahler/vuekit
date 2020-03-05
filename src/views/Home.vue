@@ -1,24 +1,21 @@
 <template>
 <main class="home">
-  {{ home.title }}
+  Homepage
 </main>
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
-  computed: {
-    home() {
-      return this.$store.getters.getPageByUID('home')
-    },
-    site() {
-      return this.$store.state.site
-    }
-  },
+  name: 'home',
   metaInfo() {
     return {
       title: this.site.title,
       titleTemplate: null
     }
-  }
+  },
+  computed: mapState(['site']),
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-<div id="app" v-if="isLoaded">
+<div id="app">
   <header>
     <h1>{{ site.title }}</h1>
     <navigation></navigation>
@@ -9,33 +9,24 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 const Navigation = () => import( /* webpackChunkName: "Navigation" */ '@/components/Navigation.vue')
-
 export default {
   name: 'App',
+  metaInfo() {
+    return {
+      title: "Vuekit",
+      titleTemplate: "Vuekit" + ' %s'
+    }
+  },
   components: {
     Navigation
   },
-  data() {
-    return {
-      isLoaded: false
-    }
-  },
-  beforeCreate() {
-    this.$store.dispatch('loadContent').then(() => {
-      this.isLoaded = true
-    })
-  },
-  computed: {
-    site() {
-      return this.$store.state.site
-    }
-  },
-  metaInfo() {
-    return {
-      title: this.site.title,
-      titleTemplate: '%s - ' + this.site.title
-    }
+  computed: mapState(['site']),
+  created() {
+    this.$store.dispatch('loadSite');
   }
 }
 </script>

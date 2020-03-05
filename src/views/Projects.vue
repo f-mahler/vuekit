@@ -1,22 +1,22 @@
 <template>
 <main class="projects grid c-3">
-  <router-link :to="{ name: 'project', params: { id: project.uid } }" v-for="project in projects.children" :key="project.uid">
-    <img :src="project.files[0].url" />
+  <router-link :to="{ name: 'project', params: { id: project.uid } }" v-for="project in projects" :key="project.uid">
+    <!-- <img v-lazy="project.files[0].url" :data-srcset="project.files[0].srcset" /> -->
     <h1>{{ project.title }}</h1>
   </router-link>
 </main>
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
-  computed: {
-    projects() {
-      return this.$store.getters.getPageByUID('projects')
-    }
-  },
+  name: 'projects',
   metaInfo: {
-    title: 'Projects',
-  }
+    title: '– Projects',
+  },
+  computed: mapState(['projects']),
 }
 </script>
 

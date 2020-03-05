@@ -1,6 +1,6 @@
 title: Default Page
 
 fields:
-  text_md:
+  text:
     label: Text
     type: textarea

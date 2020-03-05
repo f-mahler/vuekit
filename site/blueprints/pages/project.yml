@@ -30,6 +30,6 @@ columns:
               drawing: Drawing
               curatorial: Curatorial
               editorial: Editorial
-          caption:
-            label: Caption
+          description:
+            label: Description
             type: textarea

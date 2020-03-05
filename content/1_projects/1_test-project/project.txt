@@ -10,4 +10,8 @@ Category: painting
 
 ----
 
+Description: This is a new project description
+
+----
+
 Caption: *Title*, Year, Material, Format

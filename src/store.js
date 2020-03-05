@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import auth from './auth.js'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -10,48 +9,77 @@ Vue.use(VueAxios, axios)
 export default new Vuex.Store({
   state: {
     site: [],
-    pages: []
+    projects: [],
+    about: [],
   },
   getters: {
-    getPagesByType: (state, getters) => (type, collection = state.pages) => {
-      let results = []
-      if (!collection || !collection.length) {
-        return results
-      }
-      for (let i = 0; i < collection.length; i++) {
-        if (collection[i].type === type) {
-          results.push(collection[i])
-        }
-        let targetPages = getters.getPagesByType(type, collection[i].children)
-        results = results.concat(targetPages)
-      }
-      return results
-    },
-    getPageByUID: (state, getters) => (uid, collection = state.pages) => {
+    getProjectByUID: (state) => (uid, collection = state.projects) => {
       let i = collection.length
       while (i--) {
         if (collection[i].uid === uid) {
           return collection[i]
         }
-        let targetPage = getters.getPageByUID(uid, collection[i].children)
-        if (targetPage) {
-          return targetPage
-        }
       }
     }
   },
   actions: {
-    async loadContent ({ commit }) {
-      await axios.get('/api/data', {
-        withCredentials: true,
-        auth: {
-          username: auth.u,
-          password: auth.p
+    async loadSite ({ commit }) {
+      await axios.post('/api/query', {
+        "query": "site",
+        "select": {
+          "title": true,
+          "url": true,
         }
+      }, {
+        auth: {
+          username: process.env.VUE_APP_USERNAME,
+          password: process.env.VUE_APP_PASSWORD
+        }
+      }).then(function(response) {
+        commit('SET_SITE', response.data.result)
       })
-      .then(function (response) {
-        commit('SET_SITE', response.data.site)
-        commit('SET_PAGES', response.data.pages)
+    },
+    async loadProjects ({ commit }) {
+      await axios.post('/api/query', {
+        "query": "page('projects').children.listed",
+        "select": {
+          "title": true,
+          "uid": true,
+          "year": true,
+          "category": true,
+          "description": "page.description.kirbytext",
+          "images": {
+            "query": "page.images",
+            "select": {
+              "url": "file.url",
+              "thumb": "file.resize(200).url"
+            }
+          }
+        }
+      }, {
+        auth: {
+          username: process.env.VUE_APP_USERNAME,
+          password: process.env.VUE_APP_PASSWORD
+        }
+      }).then(function(response) {
+        commit('SET_PROJECTS', response.data.result.data)
+      })
+    },
+    async loadAbout ({ commit }) {
+      await axios.post('/api/query', {
+        "query": "page('about')",
+        "select": {
+          "title": true,
+          "uid": true,
+          "text": "page.text.kirbytext"
+        }
+      }, {
+        auth: {
+          username: process.env.VUE_APP_USERNAME,
+          password: process.env.VUE_APP_PASSWORD
+        }
+      }).then(function(response) {
+        commit('SET_ABOUT', response.data.result)
       })
     }
   },
@@ -59,8 +87,11 @@ export default new Vuex.Store({
     SET_SITE (state, site) {
       state.site = site
     },
-    SET_PAGES (state, pages) {
-      state.pages = pages
+    SET_PROJECTS (state, pages) {
+      state.projects = pages
+    },
+    SET_ABOUT (state, pages) {
+      state.about = pages
     }
   }
 })

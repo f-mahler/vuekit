@@ -2,6 +2,14 @@ Title: Vuekit
 
 ----
 
+Seodescription: Vuekit is a starterkit for Vue.js and Kirby 3
+
+----
+
+Seoimage: 
+
+----
+
 Copyright: 
 
 ----
