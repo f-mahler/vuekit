@@ -36,7 +36,7 @@ Icon
 
 .env
 
-/vendor/*/
+/vendor/
 /composer.lock
 /vendor/*.php
 /package-lock.json

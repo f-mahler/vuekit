@@ -1,0 +1,189 @@
+
+VERSION 1  RELEASE
+==================
+
+   Version 1.2 - Release
+      24/04/2019 20:37  1.2.1  Release
+         3e52664 Chore: composer update
+         e98d2f6 Fix breaking change to language->locale() with Kirby 3.1.3; fix truncation of locale with ‘.’
+         61e5d33 Chore: stan 0.11
+      13/04/2019 17:49  1.2.0  initial release
+         ff4f84d Chore: composer update
+         1170738 Chore: stan
+         bb201da Chore: composer update
+         71bfc0f Fix #27 (by not sorting pages; add back if downstream is fixed)
+         33cdc86 Fix #17; Fix #7
+         27897e7 Fix #26
+
+   Version 1.1 - Install by Zip or Submodule
+      26/03/2019 02:27  1.1.6  Release
+         cc92fcb Chore: composer update
+         d5d941e Chore: stan
+         a053fbd Chore: code beautification
+         8508343 Feat: include Kirby info in debug output
+         cf7a387 Fix #23
+         6a13cf3 Fix #21 to Fix#19
+         0dd7fd7 Docs: Many fat fingers have I (note to self: one day, pay attention to those squiggly lines)
+         647a276 composer require without --no-dev
+      20/02/2019 21:20  1.1.5  Release
+         363ceff Chore: composer update
+         96314e8 Fix: languages iterator hiccup; fix #18.
+         b5d9d79 Feat: nocache url parameter
+         af0e3d8 Fix: get title’s translation in a better manner
+      17/02/2019 17:15  1.1.4  Release
+         526c69a Chore: composer update
+         00bd73e Fix: liip/rmt in global not local
+      15/02/2019 20:18  1.1.3  Release
+         004e54f Chore: composer update
+         244418c Docs: edit the installation method
+         5a0ec86 Feat: guard configuration to allow single entry as string instead of as string in an arrray
+      14/02/2019 21:40  1.1.2  Release
+         c4af12a Refactor: makefile
+         0238a1d Chore: composer update
+         a3d55b5 Fix: more robust lastmod calculation; fix #16
+      13/02/2019 22:48  1.1.1  Install by Zip and Submodule
+         c775127 Chore: tweak RMT
+      13/02/2019 22:41  1.1.0  initial release
+         2cf4e69 Feat: install by zip or submodule;  Fix #14; Fix #15
+
+   Version 1.0 - Release
+      15/01/2019 23:42  1.0.0  initial release
+         c5b9024 Feat: includeUnlistedWhenTemplateIs
+         bea341b Chore: composer update
+         8ccb943 Chore: Kirby 3.0
+
+VERSION 0  FIXES AND FEATURES
+=============================
+
+   Version 0.6 - beta
+      08/01/2019 12:47  0.6.0  initial release
+         b82b7e7 Chore: revert stan fudge now fixed upstream
+         4e33378 Chore: composer update
+         b326b29 Chore: RC2 or better (for @bnomei)
+         765c689 Docs: Coffee, Beer, etc.
+         bf703da Chore: fudge stan by ignoring unknown class on cache
+         da3b733 Fix: phpcs now works (set installed_path in phpcs.xml)
+         3d79351 Chore: use kirby-rc3
+
+   Version 0.5 - beta release
+      21/11/2018 17:08  0.5.3  beta release
+         809f818 Chore: update lock
+         c7e6fd1 Chore: sanity cleanup
+         fdd1c5c Chore: Tweak PhpStorm config
+         acc226d Fix #12
+         bbbdf18 Docs: fat fingers
+      11/11/2018 17:02  0.5.2  beta release
+         fba6931 Refactor: for ML, generate default before others
+         29a4034 Docs: clarify hreflang is computed from locale
+         1f75550 Fix: spaces not tabs
+      10/11/2018 10:45  0.5.1  beta release
+         6d7e1c0 Fix: compute hreflang from locale
+      09/11/2018 20:10  0.5.0  initial release
+         8c8b983 Chore: mess (what a surprise, adding logic makes it complex)
+         66ce3a2 Docs: edit stupid mistakes
+         9d28b43 Docs: beta-6.15 was broken for multi-language sites so must use beta-6.16 (or better)
+         2e4dca6 Fix: guard against translation data corruption
+         84872b4 Refactor: shim
+         69c74f2 Chore: composer update
+         7996605 Docs: update requirements vis-à-vis multilingual support
+         235cbf1 Fix: failsafe fallback under ML for getLastmod
+         7acf9fc Chore: stan
+         f26f470 Feature: Support multilingual sites. Closes #10.
+         52be763 Docs: clarify use of excludeChildrenWhenTemplateIs for one-pagers. Closes #11.
+         d6681ee Docs: fix typo
+
+   Version 0.4 - beta release
+      23/09/2018 15:19  0.4.6  beta release
+         8871fde Chore: normalize
+         77c07ef Chore: lock
+         a04090d Refactor: stan
+         a9ebe22 Chore: tweak zip generation
+         7120476 Chore: style
+         68fb3c9 Refactor: make prefix unique
+         100786e Chore: stan goes strict and tweak release process
+      12/09/2018 18:03  0.4.5  beta release
+         4864aa4 Fix: Explicitly set plugin root
+         dc040ff Chore: style
+         c0819ed Chore: update guard for cs
+      08/09/2018 19:28  0.4.4  Beta release
+         e487079 Chore: coding standard goes external, fix #9
+         4ca859e Chore: fix makefile cruft
+         b65c4ac Docs: bring package into —no-dev
+         b813281 Chore: no multiple empty lines
+         cc90e34 Docs: clarification on lastmod; todo update
+         5ab86b9 Refactor: better lastmod calculation, and, bonus, now passes phpstan analyse --level 7
+         7a18226 Chore: bring coding style back into the package
+         2d853c0 Chore: made default to do lint-style-mess
+      06/09/2018 20:58  0.4.3  beta release
+         88e9025 Chore: Remove also omz13-cs
+      06/09/2018 20:30  0.4.2  Beta release
+         9a14307 Chore: Because make style is less to type than composer style
+         7735b1e Chore: Provisional support for PHPStorm
+         380d799 Chore: cs ruleset from external repo
+         57faae8 Docs: detail the development-oriented scripts
+         82c6d52 Refactor: update for cs
+         bb82a34 Chore: configuration for stan
+         50cdde7 Docs: lastmod can use updatedat
+         84440fb Chore: move phpcs stuff into separate package and provisional phpstan support
+         e221819 Chore: ruleset
+         66b2674 Chore: more mucking about with the menagerie that is the ruleset
+         1c0ae97 Chore: more Slevomat
+      03/09/2018 18:31  0.4.1  Beta release
+         c9c363d Feat: cache bust the cache
+         7b0ec5b Chore: style with a Slevomat rule to do return type declaration sniff
+         ba01973 Chore: name ruleset better
+         74b2c30 Chore: tweak the rules for composer fix
+      01/09/2018 20:02  0.4.0  initial release
+         14ad5af Feat: cache
+
+   Version 0.3 - Beta release
+      31/08/2018 18:56  0.3.1  beta release
+         ff40d95 Chore: update and apply coding ruleset
+         92d6019 Docs: reference omz13/kirby3-suncyclepages
+         87974e4 Docs: typo
+         ff18d55 Docs: edit
+      28/08/2018 13:09  0.3.0  initial release
+         748aadd Chore: move toolchain to global space (also Fixes #6) and add sanity check into rmt
+         47c87eb Chore: style
+         9303483 Resolves #2
+         b96846d Docs: typo
+         16ef82d Resolves #6
+         dfda54f Resolves #3
+         91874d8 Resolves #1
+         f8699a7 Chore: keep dist folder but ignore its contents
+         e9b9a4c Docs: add roadmap
+         c20a926 Chore: loc
+         5d50283 Chore: build zip file for distribution
+         dc33af0 Chore: mess checks codesize
+         77519fe Chore: ensure that the rmt prerequisites are run
+
+   Version 0.2 - Fixes and Features
+      25/08/2018 19:43  0.2.1  Fix: rmt borked the release so refactor and improve
+      25/08/2018 13:27  0.2.0  initial release
+         2d9ee17 Chore: rmt tweaks
+         fa3aa1a Refactor: reduce noise from mess
+         bca2bb0 Chore: implement composer style fix and mess
+         d5c4105 Fix: robust handling of check against debugqueryvalue
+         949fdf6 Feat: configuration for includeUnlistedWhenSlugIs
+         e16e364 Docs: reorder configuration options in order they are processed
+         472099f Fix: guards and exclusion logic
+         5ebb619 Refactor: reformat
+         c645919 Feat: Include version number when generating in debug mode
+         49ad92f Docs: typo
+         de79404 Chore: change to liip/RMT for release management
+         42e701b Chore: tweak composer config
+         9fed299 Feat: show number of images in prettified render
+         c61056f Feat: add option excludePageWhenSlugIs
+         b2066f6 Fix: Do not route /sitemap
+         e947a22 Docs: Update readme to clarify implementation details
+         217a884 Feat: Entries in the sitemap are now sorted
+         50ad7c1 Chore: Use bonndan/release-manager
+         6f8f081 Don’t do <priority>.
+         320310a Implement <image:loc>
+         cecd43b Refactor (implement isEnabled)
+         1de04e4 typo
+         c7f32f5 typo
+
+   Version 0.1 - Initial Release
+      19/08/2018 16:04  0.1.0  Initial Release
+         5c3bd8c meta

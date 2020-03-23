@@ -1,0 +1,66 @@
+{
+  "name": "omz13/kirby3-xmlsitemap",
+  "type": "kirby-plugin",
+  "description": "kirby3 plugin to generate an xml-based sitemap",
+  "keywords": [
+    "kirby3",
+    "plugin",
+    "sitemap"
+  ],
+  "version": "1.2.1",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Somers",
+      "email": "dsomers@omz13.com",
+      "homepage": "https://meldingstuff.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "getkirby/composer-installer": "^1.1"
+  },
+  "require-dev": {
+    "getkirby/cms": "^3.0.1",
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "localheinz/composer-normalize": "^1.0.0",
+    "omz13/omz13-coding-standard": "dev-master",
+    "phpcompatibility/php-compatibility": "^8.2",
+    "phpmd/phpmd": "^2.6",
+    "phpstan/phpstan": "^0.11",
+    "phpstan/phpstan-strict-rules": "^0.11",
+    "roave/security-advisories": "dev-master"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "omz13\\": "src/"
+    }
+  },
+  "minimum-stability": "beta",
+  "scripts": {
+    "build": [
+      "@sanity",
+      "composer dumpautoload -o"
+    ],
+    "fix": [
+      "./vendor/bin/phpcbf ./src/*",
+      "./vendor/bin/phpcs -s ./src/*"
+    ],
+    "lint": "./vendor/bin/parallel-lint ./src/*",
+    "mess": "./vendor/bin/phpmd ./src text codesize,controversial,design,unusedcode",
+    "sanity": [
+      "make tools",
+      "@lint",
+      "./vendor/bin/phpcs -n ./src/*",
+      "@stan",
+      "@mess"
+    ],
+    "stan": "./vendor/bin/phpstan analyse --level 7 ./src",
+    "style": "./vendor/bin/phpcs ./src/*"
+  }
+}
