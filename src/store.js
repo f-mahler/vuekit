@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
 
 Vue.use(Vuex)
-Vue.use(VueAxios, axios)
+
+const auth = {
+  username: process.env.VUE_APP_USERNAME,
+  password: process.env.VUE_APP_PASSWORD
+}
 
 export default new Vuex.Store({
   state: {
@@ -30,12 +33,8 @@ export default new Vuex.Store({
           "title": true,
           "url": true,
         }
-      }, {
-        auth: {
-          username: process.env.VUE_APP_USERNAME,
-          password: process.env.VUE_APP_PASSWORD
-        }
-      }).then(function(response) {
+      }, { auth }
+      ).then(function(response) {
         commit('SET_SITE', response.data.result)
       })
     },
@@ -56,12 +55,8 @@ export default new Vuex.Store({
             }
           }
         }
-      }, {
-        auth: {
-          username: process.env.VUE_APP_USERNAME,
-          password: process.env.VUE_APP_PASSWORD
-        }
-      }).then(function(response) {
+      }, { auth }
+      ).then(function(response) {
         commit('SET_PROJECTS', response.data.result.data)
       })
     },
@@ -73,12 +68,8 @@ export default new Vuex.Store({
           "uid": true,
           "text": "page.text.kirbytext"
         }
-      }, {
-        auth: {
-          username: process.env.VUE_APP_USERNAME,
-          password: process.env.VUE_APP_PASSWORD
-        }
-      }).then(function(response) {
+      }, { auth }
+      ).then(function(response) {
         commit('SET_ABOUT', response.data.result)
       })
     }

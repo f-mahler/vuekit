@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <header>
-    <h1>{{ site.title }}</h1>
+    <router-link :to="{ name: 'home' }">{{ site.title }}</router-link>
     <navigation></navigation>
   </header>
   <router-view></router-view>
