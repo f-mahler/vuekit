@@ -5,13 +5,25 @@ options:
   delete: false
   changeTemplate: false
 
-sections:
-  published:
-    headline: Published
-    type: pages
-    status: published
-  drafts:
-    headline: Drafts
-    type: pages
-    status: drafts
-    template: project
+columns:
+  left:
+    width: 2/3
+    sections:
+      published:
+        headline: Published
+        type: pages
+        status: published
+        layout: list
+        size: tiny
+        image: false
+  right:
+    width: 1/3
+    sections:
+      drafts:
+        headline: Drafts
+        type: pages
+        status: drafts
+        template: project
+        layout: list
+        size: tiny
+        image: false

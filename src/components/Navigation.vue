@@ -1,18 +1,18 @@
 <template lang="html">
   <nav>
-    <router-link :to="{ name: 'projects' }">Projects</router-link>
-    <router-link :to="{ name: 'about' }">About</router-link>
+    <router-link
+      v-for="link in site.menu"
+      :key="link.uid"
+      class="pl"
+      :to="{ name: link.uid }"
+      >{{ link.title }}</router-link
+    >
   </nav>
 </template>
 
 <script>
-export default {}
+import { mapState } from "vuex";
+export default {
+  computed: mapState(["site"])
+};
 </script>
-
-<style lang="scss" scoped>
-nav {
-    a {
-        padding-left: var(--lh);
-    }
-}
-</style>

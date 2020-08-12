@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+}
+
+$phone: 768px;
+$tablet: 1024px;
+
+:root {
+  --fs: 1rem;
+  --lh: calc(1.25 * 1rem);
+  --color: rgb(0, 0, 0);
+  --bg: rgb(255, 255, 255);
+  --hover: rgba(0, 0, 0, 0.5);
+}
+
+a,
+a:active,
+a:hover,
+a:visited {
+  color: var(--color);
+  text-decoration: none;
+  transition: color 0.5s, border-color 0.5s;
+  display: inline-block;
+  &:hover,
+  &.router-link-active {
+    &:not(.logo) {
+      border-color: var(--hover);
+      color: var(--hover);
+    }
+  }
+}
+
+body,
+html {
+  font-family: "Plex-Regular", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--fs);
+  line-height: var(--lh);
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+// PADDING
+.p {
+  padding: var(--lh);
+}
+.ph {
+  padding: 0 var(--lh);
+}
+.pv {
+  padding: var(--lh) 0;
+}
+.pt {
+  padding-top: var(--lh);
+}
+.pr {
+  padding-right: var(--lh);
+}
+.pb {
+  padding-bottom: var(--lh);
+}
+.pl {
+  padding-left: var(--lh);
+}
+
+// MARGIN
+.m {
+  margin: var(--lh);
+}
+.mh {
+  margin: 0 var(--lh);
+}
+.mv {
+  margin: var(--lh) 0;
+}
+.mt {
+  margin-top: var(--lh);
+}
+.mr {
+  margin-right: var(--lh);
+}
+.mb {
+  margin-bottom: var(--lh);
+}
+.ml {
+  margin-left: var(--lh);
+}
+
+// BORDER
+.bt {
+  border-top: 1px solid var(--color);
+}
+.br {
+  border-right: 1px solid var(--color);
+}
+.bb {
+  border-bottom: 1px solid var(--color);
+}
+.bl {
+  border-left: 1px solid var(--color);
+}
+
+// FLEX
+.flex {
+  display: flex;
+}
+.fd-r {
+  flex-direction: row;
+}
+.fd-c {
+  flex-direction: column;
+}
+.f-wrap {
+  flex-wrap: wrap;
+}
+
+// GRID
+.grid {
+  display: grid;
+  grid-gap: var(--lh);
+  grid-template-columns: auto;
+  &.c-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &.c-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &.c-m-1 {
+    @media only screen and (max-width: $phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &.c-m-2 {
+    @media only screen and (max-width: $phone) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  &.c-t-1 {
+    @media only screen and (max-width: $tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &.c-t-2 {
+    @media only screen and (max-width: $tablet) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+//ALIGNMENTS
+.jc-sb {
+  justify-content: space-between;
+}
+.jf-fs {
+  justify-content: flex-start;
+}
+.js-fe {
+  justify-content: flex-end;
+}
+.js-c {
+  justify-content: center;
+}

@@ -1,32 +1,47 @@
 title: Site
 
 tabs:
-  # Pages Tab
   pages:
-    label:
-      en: Pages
-    icon: page
-    sections:
-      pages:
-        headline: Pages
-        type: pages
+    label: Pages
+    icon: layers
+    columns:
+      left:
+        width: 1/2
+        sections:
+          pages:
+            headline: Listed
+            type: pages
+            layout: list
+            size: tiny
+            status: listed
+            image: false
+      right:
+        width: 1/2
+        sections:
+          unlisted:
+            headline: Unlisted
+            type: pages
+            layout: list
+            size: tiny
+            status: unlisted
+            image: false
+  seo:
+    label: SEO
+    icon: search
+    fields:
+      seoDescription:
+        label: SEO Description
+        help: This text will appear on search engines
+        type: textarea
+        maxlength: 160
+        buttons: false
+        width: 1/2
+      seoImage:
+        type: files
+        size: large
         layout: cards
-        size: tiny
-        status: listed
-        image: false
-      seo:
-        type: fields
-        fields:
-          line:
-            type: line
-          seoDescription:
-            label: SEO Description
-            help: Text appearing on search engines
-            type: textarea
-            buttons: false
-            width: 1/2
-          seoImage:
-            type: files
-            label: SEO Image
-            max: 1
-            width: 1/2
+        label: SEO Image
+        template: image
+        help: This image will appear in links on social media
+        max: 1
+        width: 1/2

@@ -8,7 +8,6 @@ columns:
         headline: Gallery
         type: files
         layout: cards
-        min: 1
         template: image
         size: tiny
         image:
