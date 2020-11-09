@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+if($page->isHomePage()) { $title = $site->title(); } else { $title =
+$site->title() . ' – ' . $page->title(); } $description =
+$page->text()->or($site->seoDescription())->excerpt(160); $thumbnail = ($image =
+$page->images()->sortBy('sort')->first()) ? $image->resize(1280)->url() :
+(($siteImage = $site->seoImage()->toFile()) ? $siteImage->resize(1280)->url() :
+''); ?>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -7,17 +14,14 @@
       name="viewport"
       content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"
     />
-    <meta name="description" content="<?= $site->seoDescription()->html() ?>" />
+    <meta name="description" content="<?= $description ?>" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><?= $site->title() ?></title>
     <meta property="og:url" content="<?= $site->url() ?>" />
-    <meta property="og:title" content="<?= $site->title()->html() ?>" />
-    <meta
-      property="og:description"
-      content="<?= $site->seoDescription()->html() ?>"
-    />
-    <meta property="og:image" content="<?= $site->seoImage()->url() ?>" />
+    <meta property="og:title" content="<?= $title ?>" />
+    <meta property="og:description" content="<?= $description ?>" />
+    <meta property="og:image" content="<?= $thumbnail ?>" />
   </head>
 
   <body>
