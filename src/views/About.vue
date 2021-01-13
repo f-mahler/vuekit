@@ -1,5 +1,5 @@
 <template>
-  <main class="p grid c-2 c-m-1" v-if="about">
+  <main class="p-4 grid grid-cols-1 gap-4 md:grid-cols-2" v-if="about">
     <div>
       <h1>{{ about.title }}</h1>
     </div>
@@ -16,11 +16,11 @@ export default {
       title: "– About",
       meta: [
         {
-          description: this.about.text
-        }
-      ]
+          description: this.about.text,
+        },
+      ],
     };
   },
-  computed: mapState(["about"])
+  computed: mapState(["about"]),
 };
 </script>

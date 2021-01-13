@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <header class="p bb flex jc-sb">
+  <div id="app antialiased">
+    <header class="p-4 border-b border-black flex justify-between">
       <router-link class="logo" :to="{ name: 'home' }">{{
         site.title
       }}</router-link>
@@ -20,22 +20,15 @@ export default {
   name: "App",
   metaInfo() {
     return {
-      titleTemplate: "Vuekit" + " %s"
+      titleTemplate: "Vuekit" + " %s",
     };
   },
   components: {
-    Navigation
+    Navigation,
   },
   computed: mapState(["site"]),
   created() {
     this.$store.dispatch("loadSite");
-  }
+  },
 };
 </script>
-
-<style lang="scss">
-@import "node_modules/reset-css/sass/_reset";
-@import "@/assets/css/defaults";
-@import "@/assets/css/typography";
-@import "@/assets/css/transitions";
-</style>
