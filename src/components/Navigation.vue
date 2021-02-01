@@ -3,7 +3,7 @@
     <router-link
       v-for="link in site.menu"
       :key="link.uid"
-      class="pl"
+      class="pl-4"
       :to="{ name: link.uid }"
       >{{ link.title }}</router-link
     >
@@ -13,6 +13,6 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  computed: mapState(["site"])
+  computed: mapState(["site"]),
 };
 </script>

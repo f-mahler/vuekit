@@ -1,12 +1,14 @@
 <template>
-  <main class="p" v-if="site">
-    <h1 class="mb">Welcome!</h1>
-    <h2 class="mb">Kirby 3 and Vue.js together.</h2>
+  <main class="p-4" v-if="site">
+    <h1 class="mb-4">Hello World</h1>
     <p>
       Vuekit is a starterkit using Kirby 3 as headless CMS and Vue.js as
-      front-end.<br />
+      front-end with Tailwind CSS.<br />
       You can read the instructions at
-      <a class="td-ul" href="https://github.com/f-mahler/vuekit" target="blank"
+      <a
+        class="underline"
+        href="https://github.com/f-mahler/vuekit"
+        target="blank"
         >Github</a
       >.
     </p>
@@ -20,9 +22,9 @@ export default {
   metaInfo() {
     return {
       title: this.site.title,
-      titleTemplate: null
+      titleTemplate: null,
     };
   },
-  computed: mapState(["site"])
+  computed: mapState(["site"]),
 };
 </script>

@@ -1,10 +1,13 @@
 # Vuekit
-[Kirby](https://getkirby.com) v3 and [Vue.js](https://vuejs.org/) together.
+
+[Kirby](https://getkirby.com) + [Vue.js](https://vuejs.org/) + [TailwindCSS](https://tailwindcss.com/)
 
 ### Requirement
-* A server with php & https (ex. Laravel Valet)
+
+-   A server with php & https (ex. Laravel Valet)
 
 ### Project setup
+
 ```
 1. npm install
 2. composer install
@@ -16,16 +19,19 @@
 ```
 
 ### Development
+
 ```
 npm run dev
 ```
 
 ### Build for production
+
 ```
 npm run build
 ```
 
 ### Update Kirby
+
 ```
 composer update
 ```
