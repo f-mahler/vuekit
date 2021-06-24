@@ -1,0 +1,10 @@
+label: Media
+sections:
+  media:
+    headline: Media
+    type: files
+    layout: cards
+    info: "{{ file.niceSize }} / {{ file.dimensions }}"
+    size: small
+    image:
+      back: black

@@ -1,34 +1,38 @@
 title: Project
 pages: false
 
-columns:
-  - width: 2/3
-    sections:
-      gallery:
-        headline: Gallery
-        type: files
-        layout: cards
-        template: image
-        size: tiny
-        image:
-          cover: true
-  - width: 1/3
-    sections:
-      info:
-        type: fields
-        fields:
-          year:
-            label: Year
-            type: number
-            placeholder: 2019
-          category:
-            label: Category
-            type: select
-            options:
-              painting: Painting
-              drawing: Drawing
-              curatorial: Curatorial
-              editorial: Editorial
-          description:
-            label: Description
-            type: textarea
+tabs:
+  project:
+    columns:
+      - width: 2/3
+        sections:
+          gallery:
+            headline: Gallery
+            type: files
+            layout: cards
+            template: image
+            size: tiny
+            image:
+              cover: true
+      - width: 1/3
+        sections:
+          info:
+            type: fields
+            fields:
+              year:
+                label: Year
+                type: number
+                placeholder: 2019
+              category:
+                label: Category
+                type: select
+                options:
+                  painting: Painting
+                  drawing: Drawing
+                  curatorial: Curatorial
+                  editorial: Editorial
+              description:
+                label: Description
+                type: textarea
+  media: tabs/media
+  meta: tabs/meta

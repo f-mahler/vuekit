@@ -1,0 +1,39 @@
+label:
+  en: Meta
+columns:
+  - width: 2/3
+    sections:
+      meta:
+        type: fields
+        fields:
+          meta_title:
+            label: Title
+            type: text
+          meta_desc:
+            label: Description
+            type: textarea
+            size: small
+            buttons: false
+  - width: 1/3
+    fields:
+      shareimg:
+        label: Share image
+        type: files
+        max: 1
+        layout: cards
+        info: "{{ file.dimensions }}"
+        sortable: false
+        template: share
+        size: large
+        help: "Select or upload image"
+        image:
+          back: black
+          ratio: 3/2
+  - width: 1/1
+    sections:
+      head:
+        type: info
+        headline: Help
+        text: |
+          Edit these fields to overwrite the default title, descriptions or share image.
+          Preview here → [__opengraphy.xyz__](https://www.opengraph.xyz/)
