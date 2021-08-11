@@ -8,13 +8,13 @@
     "dev": "vue-cli-service build --watch"
   },
   "dependencies": {
-    "@tailwindcss/postcss7-compat": "^2.2.4",
+    "@tailwindcss/postcss7-compat": "^2.2.7",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
-    "core-js": "^3.15.1",
+    "core-js": "^3.16.1",
     "postcss": "^7.0.36",
     "reset-css": "^4.0.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "vue": "^2.6.14",
     "vue-axios": "^2.1.5",
     "vue-infinite-scroll": "^2.0.2",

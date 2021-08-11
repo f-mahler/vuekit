@@ -2,7 +2,6 @@
   "require": {
     "php": ">=7.2.0",
     "getkirby/cms": "^3.4.5",
-    "omz13/kirby3-xmlsitemap": "^1.2",
     "getkirby/kql": "^1.0"
   },
   "config": {
